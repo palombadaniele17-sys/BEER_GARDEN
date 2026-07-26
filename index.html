@@ -9,29 +9,30 @@
     <style>
         :root {
             --bg-dark: #050908;
-            --bg-gradient: radial-gradient(circle at top, #1b3b2b 0, #050908 45%, #020304 100%);
-            --green-dark: #0F5E3B;
-            --green-light: #7BC59A;
+            --bg-gradient: radial-gradient(circle at top, #0C2F2A 0, #050908 45%, #020304 100%);
+            --green-dark: #0A3F34;   /* verde scuro petrolio */
+            --green-light: #5FAF9B;  /* verde acqua premium */
+            --accent: #0C5247;       /* verde/blu profondo */
             --text-main: #F5F7F6;
             --text-muted: #A7B3AE;
-            --panel-bg: rgba(10, 20, 16, 0.85);
-            --glass-border: rgba(123, 197, 154, 0.18);
+            --panel-bg: rgba(10, 20, 16, 0.88);
+            --glass-border: rgba(95, 175, 155, 0.16);
             --shadow-deep: 0 24px 60px rgba(0, 0, 0, 0.75);
-            --radius-lg: 22px;
-            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
             --radius-pill: 999px;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
-        body {
+        html, body {
+            height: 100%;
             margin: 0;
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-gradient);
             color: var(--text-main);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .page-wrapper {
@@ -41,41 +42,43 @@
         }
 
         /* LANGUAGE OVERLAY */
-
         .lang-overlay {
             position: fixed;
             inset: 0;
-            z-index: 100;
+            z-index: 120;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px 16px;
-            background: radial-gradient(circle at top, rgba(15, 94, 59, 0.55), rgba(5, 9, 8, 0.98));
+            padding: 28px 18px;
+            background: linear-gradient(180deg, rgba(4,8,7,0.72), rgba(4,8,7,0.88));
+            backdrop-filter: blur(8px);
         }
 
         .lang-card {
-            max-width: 420px;
             width: 100%;
+            max-width: 460px;
             border-radius: var(--radius-lg);
-            background: var(--panel-bg);
+            background: linear-gradient(180deg, rgba(12,47,42,0.55), rgba(6,12,11,0.85));
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-deep);
-            padding: 20px 18px 18px;
+            padding: 22px;
             text-align: center;
         }
 
         .lang-logo {
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.16em;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            margin-bottom: 6px;
+            color: var(--green-light);
+            margin-bottom: 8px;
         }
 
         .lang-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin: 0 0 6px;
+            margin: 0 0 8px;
+            color: var(--text-main);
         }
 
         .lang-subtitle {
@@ -86,74 +89,68 @@
 
         .lang-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             margin-bottom: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
 
         .lang-btn {
-            flex: 0 0 auto;
-            min-width: 130px;
-            padding: 10px 14px;
+            min-width: 140px;
+            padding: 12px 14px;
             border-radius: var(--radius-pill);
-            border: 1px solid rgba(123, 197, 154, 0.35);
-            background: rgba(5, 9, 8, 0.9);
+            border: 1px solid rgba(95,175,155,0.14);
+            background: linear-gradient(180deg, rgba(6,12,11,0.6), rgba(6,12,11,0.85));
             color: var(--text-main);
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
-            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+            transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+            box-shadow: 0 6px 18px rgba(4,8,7,0.6);
         }
 
-        .lang-btn span.flag {
-            font-size: 1.1rem;
-        }
+        .lang-btn .flag { font-size: 1.15rem; }
 
-        .lang-btn:hover {
+        .lang-btn:active { transform: translateY(1px); }
+
+        .lang-btn.primary {
             background: linear-gradient(135deg, var(--green-dark), var(--green-light));
-            color: #050908;
-            border-color: rgba(5, 9, 8, 0.9);
-            transform: translateY(-1px);
+            color: #04100d;
+            border-color: rgba(4,8,7,0.6);
+            box-shadow: 0 10px 30px rgba(10,63,52,0.28);
         }
 
         .lang-note {
             font-size: 0.78rem;
             color: var(--text-muted);
+            margin-top: 6px;
         }
 
         /* HERO */
-
         .hero {
             position: relative;
-            padding: 18px 18px 24px;
-            background: linear-gradient(135deg, rgba(15, 94, 59, 0.35), rgba(5, 9, 8, 0.9));
+            padding: 18px 18px 22px;
             overflow: hidden;
         }
 
         .hero-inner {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+            grid-template-columns: 1fr 0.9fr;
             gap: 18px;
             align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .hero-inner {
-                grid-template-columns: minmax(0, 1fr);
-            }
+        @media (max-width: 820px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 12px; }
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
+        .hero-content { z-index: 2; }
 
         .hero-kicker {
             font-size: 0.78rem;
@@ -161,78 +158,43 @@
             text-transform: uppercase;
             color: var(--green-light);
             margin-bottom: 6px;
+            font-weight: 700;
         }
 
         .hero-title {
             font-size: 1.9rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
+            font-weight: 800;
             margin: 0 0 6px;
+            color: var(--text-main);
         }
 
         .hero-subtitle {
             font-size: 0.95rem;
             color: var(--text-muted);
-            max-width: 420px;
-            margin-bottom: 14px;
-        }
-
-        .hero-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
-        .hero-tag {
-            padding: 6px 12px;
-            border-radius: var(--radius-pill);
-            border: 1px solid rgba(123, 197, 154, 0.35);
-            background: rgba(5, 9, 8, 0.7);
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        .hero-note {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         .hero-image {
             position: relative;
             border-radius: var(--radius-lg);
             overflow: hidden;
-            background: radial-gradient(circle at 20% 0%, rgba(123, 197, 154, 0.35), transparent 55%),
-                        radial-gradient(circle at 80% 100%, rgba(15, 94, 59, 0.55), transparent 60%),
-                        #050908;
-            box-shadow: var(--shadow-deep);
-        }
-
-        .hero-image::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image:
-                radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.08) 0, transparent 55%),
-                radial-gradient(circle at 80% 20%, rgba(123, 197, 154, 0.18) 0, transparent 60%);
-            mix-blend-mode: screen;
-            opacity: 0.9;
+            min-height: 120px;
+            background: radial-gradient(circle at 20% 0%, rgba(95,175,155,0.12), transparent 45%),
+                        linear-gradient(180deg, rgba(6,12,11,0.45), rgba(6,12,11,0.65));
+            box-shadow: 0 18px 48px rgba(4,8,7,0.6);
         }
 
         .hero-overlay {
-            position: relative;
-            z-index: 2;
-            padding: 18px 18px 16px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .hero-overlay-title {
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--green-light);
         }
 
         .hero-overlay-line {
@@ -243,14 +205,14 @@
         .hero-overlay-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
+            gap: 8px;
+            padding: 8px 12px;
             border-radius: var(--radius-pill);
-            background: rgba(5, 9, 8, 0.85);
-            border: 1px solid rgba(123, 197, 154, 0.4);
-            font-size: 0.8rem;
-            color: var(--green-light);
+            background: rgba(6,12,11,0.6);
+            border: 1px solid rgba(95,175,155,0.12);
+            color: var(--text-main);
             width: fit-content;
+            font-weight: 600;
         }
 
         .hero-overlay-pill-dot {
@@ -258,24 +220,23 @@
             height: 8px;
             border-radius: 50%;
             background: var(--green-light);
-            box-shadow: 0 0 0 6px rgba(123, 197, 154, 0.18);
+            box-shadow: 0 0 0 6px rgba(95,175,155,0.08);
         }
 
-        /* HEADER CATEGORIES */
-
+        /* HEADER */
         .header {
             position: sticky;
             top: 0;
-            z-index: 20;
-            backdrop-filter: blur(18px);
-            background: linear-gradient(to bottom, rgba(5, 9, 8, 0.96), rgba(5, 9, 8, 0.86));
-            border-bottom: 1px solid rgba(123, 197, 154, 0.18);
+            z-index: 60;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(180deg, rgba(6,12,11,0.92), rgba(6,12,11,0.86));
+            border-bottom: 1px solid rgba(95,175,155,0.08);
         }
 
         .header-inner {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
-            padding: 10px 16px 12px;
+            padding: 10px 16px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -285,73 +246,71 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .header-logo {
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.16em;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
+            color: var(--green-light);
         }
 
         .header-badge {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-            padding: 4px 10px;
-            border-radius: var(--radius-pill);
-            border: 1px solid rgba(123, 197, 154, 0.25);
-            background: rgba(5, 9, 8, 0.9);
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(95,175,155,0.08);
+            background: rgba(6,12,11,0.6);
+            font-weight: 600;
         }
 
         .category-scroll {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding: 8px 2px;
             scrollbar-width: none;
         }
 
-        .category-scroll::-webkit-scrollbar {
-            display: none;
-        }
+        .category-scroll::-webkit-scrollbar { display: none; }
 
         .cat-btn {
             flex: 0 0 auto;
-            padding: 8px 14px;
+            padding: 9px 14px;
             border-radius: var(--radius-pill);
-            border: 1px solid rgba(123, 197, 154, 0.25);
-            background: rgba(10, 20, 16, 0.9);
+            border: 1px solid rgba(95,175,155,0.08);
+            background: rgba(6,12,11,0.6);
             color: var(--text-muted);
-            font-size: 0.82rem;
-            font-weight: 500;
+            font-size: 0.86rem;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
-            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+            transition: background .14s ease, transform .12s ease, color .12s ease;
         }
 
-        .cat-btn span.emoji {
-            font-size: 1rem;
-        }
+        .cat-btn .emoji { font-size: 1rem; }
 
         .cat-btn.active {
-            background: linear-gradient(135deg, var(--green-dark), var(--green-light));
-            color: #050908;
-            border-color: rgba(5, 9, 8, 0.9);
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, var(--accent), var(--green-light));
+            color: #04100d;
+            border-color: rgba(4,8,7,0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(10,63,52,0.18);
         }
 
-        /* MAIN CONTENT */
-
+        /* MAIN */
         .main {
             flex: 1;
-            padding: 18px 16px 80px;
+            padding: 18px 16px 84px;
         }
 
         .main-inner {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -364,12 +323,10 @@
             background: var(--panel-bg);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-deep);
-            padding: 16px 16px 14px;
+            padding: 16px;
         }
 
-        .category-panel.active {
-            display: block;
-        }
+        .category-panel.active { display: block; }
 
         .category-header {
             display: flex;
@@ -380,128 +337,95 @@
         }
 
         .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
+            color: var(--text-main);
         }
 
-        .category-note {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
+        .category-note { font-size: 0.78rem; color: var(--text-muted); }
 
-        .items-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .items-list { display: flex; flex-direction: column; gap: 10px; }
 
         .item {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 10px;
-            padding: 8px 10px;
+            gap: 12px;
+            padding: 10px 12px;
             border-radius: var(--radius-md);
-            background: rgba(5, 9, 8, 0.75);
-            border: 1px solid rgba(123, 197, 154, 0.12);
+            background: rgba(6,12,11,0.55);
+            border: 1px solid rgba(95,175,155,0.06);
         }
 
-        .item-left {
-            flex: 1;
-        }
+        .item-left { flex: 1; min-width: 0; }
 
         .item-name {
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
         }
 
         .item-desc {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 4px;
+            line-height: 1.25;
         }
 
         .item-right {
             flex: 0 0 auto;
             text-align: right;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 800;
             color: var(--green-light);
             white-space: nowrap;
         }
 
         /* SUBCATEGORIES */
-
         .subcat-bar {
             display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
             gap: 8px;
-            padding-bottom: 4px;
-            margin-bottom: 10px;
-            scrollbar-width: none;
-        }
-
-        .subcat-bar::-webkit-scrollbar {
-            display: none;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
         }
 
         .subcat-btn {
-            flex: 0 0 auto;
-            padding: 7px 12px;
+            padding: 8px 12px;
             border-radius: var(--radius-pill);
-            border: 1px solid rgba(123, 197, 154, 0.25);
-            background: rgba(5, 9, 8, 0.9);
+            border: 1px solid rgba(95,175,155,0.08);
+            background: rgba(6,12,11,0.6);
             color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 500;
+            font-size: 0.84rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
         }
 
         .subcat-btn.active {
-            background: linear-gradient(135deg, var(--green-dark), var(--green-light));
-            color: #050908;
-            border-color: rgba(5, 9, 8, 0.9);
+            background: linear-gradient(135deg, var(--accent), var(--green-light));
+            color: #04100d;
+            border-color: rgba(4,8,7,0.6);
         }
 
-        .subcat-panel {
-            display: none;
-        }
+        .subcat-panel { display: none; }
+        .subcat-panel.active { display: block; }
 
-        .subcat-panel.active {
-            display: block;
-        }
-
-        .subcat-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .subcat-note {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
+        .subcat-title { font-size: 0.92rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
 
         /* FOOTER */
-
         .footer {
             margin-top: auto;
-            border-top: 1px solid rgba(123, 197, 154, 0.18);
-            background: rgba(5, 9, 8, 0.96);
-            backdrop-filter: blur(18px);
+            border-top: 1px solid rgba(95,175,155,0.06);
+            background: rgba(6,12,11,0.9);
+            backdrop-filter: blur(8px);
         }
 
         .footer-inner {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
-            padding: 12px 16px 16px;
+            padding: 12px 16px 18px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -520,75 +444,49 @@
         .footer-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
+            gap: 8px;
+            padding: 8px 12px;
             border-radius: var(--radius-pill);
-            border: 1px solid rgba(123, 197, 154, 0.25);
-            background: rgba(5, 9, 8, 0.9);
+            border: 1px solid rgba(95,175,155,0.08);
+            background: rgba(6,12,11,0.6);
             color: var(--text-main);
+            font-weight: 700;
         }
 
-        .footer-pill-icon {
-            font-size: 1rem;
+        .footer-copy { text-align: right; color: var(--text-muted); }
+
+        @media (max-width: 520px) {
+            .lang-card { padding: 16px; }
+            .lang-btn { min-width: 120px; padding: 10px 12px; }
+            .hero-title { font-size: 1.5rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .category-title { font-size: 1rem; }
+            .item-name { font-size: 0.92rem; }
         }
 
-        .footer-copy {
-            text-align: right;
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 14px 12px 18px;
-            }
-            .header-inner {
-                padding: 8px 10px 10px;
-            }
-            .main {
-                padding: 14px 10px 70px;
-            }
-            .category-panel {
-                padding: 14px 12px 12px;
-            }
-            .item {
-                padding: 7px 8px;
-            }
-        }
-
-        /* LANGUAGE VIEWS */
-
-        .lang-view {
-            display: none;
-        }
-
-        .lang-view.active {
-            display: block;
-        }
+        /* language views */
+        .lang-view { display: none; }
+        .lang-view.active { display: block; }
     </style>
 </head>
 <body>
 <div class="page-wrapper">
 
     <!-- LANGUAGE OVERLAY -->
-    <div class="lang-overlay" id="lang-overlay">
-        <div class="lang-card">
-            <div class="lang-logo">Beer Garden · Menu</div>
-            <div class="lang-title">Choose your language</div>
-            <div class="lang-subtitle">
-                Apri il menù dal tuo smartphone e scegli la lingua preferita per consultare piatti, birre e drink.
-            </div>
-            <div class="lang-buttons">
-                <button class="lang-btn" data-lang="it">
-                    <span class="flag">🇮🇹</span>
-                    <span>Italiano</span>
+    <div class="lang-overlay" id="lang-overlay" aria-hidden="false">
+        <div class="lang-card" role="dialog" aria-modal="true" aria-label="Language selection">
+            <div class="lang-logo">Beer Garden</div>
+            <div class="lang-title">Choose language</div>
+            <div class="lang-subtitle">Select your preferred language to view the menu.</div>
+            <div class="lang-buttons" role="group" aria-label="Language options">
+                <button class="lang-btn primary" data-lang="it" aria-label="Italiano">
+                    <span class="flag">🇮🇹</span><span>Italiano</span>
                 </button>
-                <button class="lang-btn" data-lang="en">
-                    <span class="flag">🇬🇧</span>
-                    <span>English</span>
+                <button class="lang-btn" data-lang="en" aria-label="English">
+                    <span class="flag">🇬🇧</span><span>English</span>
                 </button>
             </div>
-            <div class="lang-note">
-                Ottimizzato per apertura da tag NFC al tavolo · Layout compatto e leggibile su smartphone.
-            </div>
+            <div class="lang-note">Optimized for NFC opening on smartphones.</div>
         </div>
     </div>
 
@@ -596,37 +494,20 @@
     <div class="lang-view" id="view-it">
 
         <!-- HERO IT -->
-        <section class="hero">
+        <section class="hero" aria-labelledby="hero-title-it">
             <div class="hero-inner">
                 <div class="hero-content">
                     <div class="hero-kicker">🍺 BEER GARDEN</div>
-                    <h1 class="hero-title">Menu Digitale Ufficiale</h1>
-                    <p class="hero-subtitle">
-                        Sfoglia il menù direttamente dal tuo telefono – pensato per la lettura da NFC, con layout premium
-                        e palette verde.
-                    </p>
-                    <div class="hero-tags">
-                        <div class="hero-tag">Hamburger selezionati</div>
-                        <div class="hero-tag">Carni alla brace</div>
-                        <div class="hero-tag">Birre alla spina &amp; in bottiglia</div>
-                        <div class="hero-tag">Dessert artigianali</div>
-                    </div>
-                    <p class="hero-note">
-                        Scorri le categorie in alto, tocca per aprire i pannelli e trova subito ciò che ti interessa.
-                    </p>
+                    <h1 id="hero-title-it" class="hero-title">Menu Digitale</h1>
+                    <p class="hero-subtitle">Seleziona una categoria e consulta il menù in modo rapido e professionale.</p>
                 </div>
-                <div class="hero-image">
+                <div class="hero-image" aria-hidden="true">
                     <div class="hero-overlay">
-                        <div class="hero-overlay-title">Beer Garden Experience</div>
-                        <div class="hero-overlay-line">
-                            Atmosfera da birreria, carni selezionate, panini gourmet e birre di carattere.
-                        </div>
-                        <div class="hero-overlay-line">
-                            Menu ottimizzato per smartphone – perfetto per apertura da tag NFC al tavolo.
-                        </div>
+                        <div class="hero-overlay-title">Beer Garden</div>
+                        <div class="hero-overlay-line">Qualità · Tradizione · Selezione</div>
                         <div class="hero-overlay-pill">
                             <span class="hero-overlay-pill-dot"></span>
-                            <span>Tap &amp; Enjoy – Menù sempre aggiornato</span>
+                            <span>Menù aggiornato</span>
                         </div>
                     </div>
                 </div>
@@ -634,13 +515,13 @@
         </section>
 
         <!-- HEADER IT -->
-        <header class="header">
+        <header class="header" role="banner">
             <div class="header-inner">
                 <div class="header-top-row">
-                    <div class="header-logo">Beer Garden · Menu</div>
-                    <div class="header-badge">Scorri le categorie &amp; tocca per aprire</div>
+                    <div class="header-logo">Beer Garden</div>
+                    <div class="header-badge">Menu Digitale</div>
                 </div>
-                <div class="category-scroll">
+                <div class="category-scroll" role="navigation" aria-label="Categorie">
                     <button class="cat-btn active" data-target="it-cat-antipasti"><span class="emoji">🍽️</span><span>Antipasti</span></button>
                     <button class="cat-btn" data-target="it-cat-primi"><span class="emoji">🍝</span><span>Primi piatti</span></button>
                     <button class="cat-btn" data-target="it-cat-secondi"><span class="emoji">🥩</span><span>Secondi piatti</span></button>
@@ -658,14 +539,14 @@
         </header>
 
         <!-- MAIN IT -->
-        <main class="main">
+        <main class="main" role="main">
             <div class="main-inner">
 
                 <!-- ANTIPASTI -->
-                <section id="it-cat-antipasti" class="category-panel active">
+                <section id="it-cat-antipasti" class="category-panel active" aria-labelledby="it-antipasti-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍽️ Antipasti</h2>
-                        <div class="category-note">Selezione di antipasti Beer Garden</div>
+                        <h2 id="it-antipasti-title" class="category-title">🍽️ Antipasti</h2>
+                        <div class="category-note">Selezione di antipasti</div>
                     </div>
                     <div class="items-list">
                         <div class="item"><div class="item-left"><div class="item-name">Tartare di manzo</div></div><div class="item-right">16,00</div></div>
@@ -678,11 +559,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Involtini di provola</div>
-                                <div class="item-desc">
-                                    • Provola e prosciutto – 9,00<br>
-                                    • Provola, prosciutto e mais – 9,00<br>
-                                    • Provola ai funghi – 9,00
-                                </div>
+                                <div class="item-desc">• Provola e prosciutto – 9,00 · • Provola, prosciutto e mais – 9,00 · • Provola ai funghi – 9,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -690,10 +567,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Bocconcini di bufala</div>
-                                <div class="item-desc">
-                                    • Alla brace con speck – 7,00<br>
-                                    • Con salmone – 10,00
-                                </div>
+                                <div class="item-desc">• Alla brace con speck – 7,00 · • Con salmone – 10,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -704,11 +578,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Parmigiana di melanzane</div>
-                                <div class="item-desc">
-                                    • Rossa – 7,00<br>
-                                    • Bianca – 7,00<br>
-                                    • Al pesto di basilico – 7,00
-                                </div>
+                                <div class="item-desc">• Rossa – 7,00 · • Bianca – 7,00 · • Al pesto di basilico – 7,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -721,10 +591,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Provole speciali</div>
-                                <div class="item-desc">
-                                    • Siciliana (melanzane, provola, grana) – 9,00<br>
-                                    • Beer Garden (provola, peperoni verdi, grana) – 10,00
-                                </div>
+                                <div class="item-desc">• Siciliana – 9,00 · • Beer Garden – 10,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -735,10 +602,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Gnocchi fritti</div>
-                                <div class="item-desc">
-                                    • Aglio e prezzemolo – 7,00<br>
-                                    • Cacio e pepe – 9,00
-                                </div>
+                                <div class="item-desc">• Aglio e prezzemolo – 7,00 · • Cacio e pepe – 9,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -747,10 +611,10 @@
                     </div>
                 </section>
 
-                <!-- PRIMI -->
-                <section id="it-cat-primi" class="category-panel">
+                <!-- PRIMI PIATTI -->
+                <section id="it-cat-primi" class="category-panel" aria-labelledby="it-primi-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍝 Primi piatti</h2>
+                        <h2 id="it-primi-title" class="category-title">🍝 Primi piatti</h2>
                         <div class="category-note">Pasta &amp; primi della casa</div>
                     </div>
                     <div class="items-list">
@@ -768,10 +632,10 @@
                     </div>
                 </section>
 
-                <!-- SECONDI -->
-                <section id="it-cat-secondi" class="category-panel">
+                <!-- SECONDI PIATTI -->
+                <section id="it-cat-secondi" class="category-panel" aria-labelledby="it-secondi-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥩 Secondi piatti</h2>
+                        <h2 id="it-secondi-title" class="category-title">🥩 Secondi piatti</h2>
                         <div class="category-note">Secondi alla brace &amp; al forno</div>
                     </div>
                     <div class="items-list">
@@ -786,9 +650,9 @@
                 </section>
 
                 <!-- BRUSCHETTE -->
-                <section id="it-cat-bruschette" class="category-panel">
+                <section id="it-cat-bruschette" class="category-panel" aria-labelledby="it-bruschette-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍞 Bruschette</h2>
+                        <h2 id="it-bruschette-title" class="category-title">🍞 Bruschette</h2>
                         <div class="category-note">(2 fette per porzione)</div>
                     </div>
                     <div class="items-list">
@@ -806,9 +670,9 @@
                 </section>
 
                 <!-- PANINI -->
-                <section id="it-cat-panini" class="category-panel">
+                <section id="it-cat-panini" class="category-panel" aria-labelledby="it-panini-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥪 Panini</h2>
+                        <h2 id="it-panini-title" class="category-title">🥪 Panini</h2>
                         <div class="category-note">Panini Beer Garden</div>
                     </div>
                     <div class="items-list">
@@ -832,19 +696,19 @@
                     </div>
                 </section>
 
-                <!-- LE NOSTRE CARNI -->
-                <section id="it-cat-carni" class="category-panel">
+                <!-- LE NOSTRE CARNI (SOTTOCATEGORIE) -->
+                <section id="it-cat-carni" class="category-panel" aria-labelledby="it-carni-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥩 Le nostre carni</h2>
+                        <h2 id="it-carni-title" class="category-title">🥩 Le nostre carni</h2>
                         <div class="category-note">Tutte insieme, divise in sottocategorie</div>
                     </div>
 
-                    <div class="subcat-bar">
+                    <div class="subcat-bar" role="tablist" aria-label="Sottocategorie carni">
                         <button class="subcat-btn active" data-subtarget="it-sub-hamburger">🍔 Hamburger</button>
                         <button class="subcat-btn" data-subtarget="it-sub-bistecche">🥩 Bistecche</button>
                         <button class="subcat-btn" data-subtarget="it-sub-entrecote">🥩 Entrecote</button>
                         <button class="subcat-btn" data-subtarget="it-sub-tagliate">🔪 Tagliate</button>
-                        <button class="subcat-btn" data-subtarget="it-sub-specialita">🍗 Specialità di carne</button>
+                        <button class="subcat-btn" data-subtarget="it-sub-specialita">🍗 Specialità</button>
                     </div>
 
                     <div id="it-sub-hamburger" class="subcat-panel active">
@@ -904,9 +768,9 @@
                 </section>
 
                 <!-- CONTORNI -->
-                <section id="it-cat-contorni" class="category-panel">
+                <section id="it-cat-contorni" class="category-panel" aria-labelledby="it-contorni-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥗 Contorni</h2>
+                        <h2 id="it-contorni-title" class="category-title">🥗 Contorni</h2>
                         <div class="category-note">Verdure &amp; contorni</div>
                     </div>
                     <div class="items-list">
@@ -922,9 +786,9 @@
                 </section>
 
                 <!-- DESSERT -->
-                <section id="it-cat-dessert" class="category-panel">
+                <section id="it-cat-dessert" class="category-panel" aria-labelledby="it-dessert-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍰 Dessert</h2>
+                        <h2 id="it-dessert-title" class="category-title">🍰 Dessert</h2>
                         <div class="category-note">Dolci &amp; dessert</div>
                     </div>
                     <div class="items-list">
@@ -945,9 +809,9 @@
                 </section>
 
                 <!-- BIBITE -->
-                <section id="it-cat-bibite" class="category-panel">
+                <section id="it-cat-bibite" class="category-panel" aria-labelledby="it-bibite-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥤 Bibite</h2>
+                        <h2 id="it-bibite-title" class="category-title">🥤 Bibite</h2>
                         <div class="category-note">Acqua &amp; soft drink</div>
                     </div>
                     <div class="items-list">
@@ -964,69 +828,24 @@
                 </section>
 
                 <!-- BIRRE ALLA SPINA -->
-                <section id="it-cat-birra-spina" class="category-panel">
+                <section id="it-cat-birra-spina" class="category-panel" aria-labelledby="it-birra-spina-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍺 Birre alla spina</h2>
+                        <h2 id="it-birra-spina-title" class="category-title">🍺 Birre alla spina</h2>
                         <div class="category-note">Selezione alla spina</div>
                     </div>
                     <div class="items-list">
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Tucher Hefe Weizen</div>
-                                <div class="item-desc">
-                                    • 0.30 – 5,00<br>
-                                    • 0.50 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Carlsberg Pilsner</div>
-                                <div class="item-desc">
-                                    • 0.25 – 3,00<br>
-                                    • 0.40 – 5,00
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Carlsberg Special Brew</div>
-                                <div class="item-desc">
-                                    • 0.25 – 5,00<br>
-                                    • 0.40 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Grimbergen Double</div>
-                                <div class="item-desc">
-                                    • 0.30 – 5,00<br>
-                                    • 0.50 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Grimbergen Triple</div>
-                                <div class="item-desc">
-                                    • 0.30 – 5,00<br>
-                                    • 0.50 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
+                        <div class="item"><div class="item-left"><div class="item-name">Tucher Hefe Weizen</div><div class="item-desc">• 0.30 – 5,00 · • 0.50 – 7,50</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Carlsberg Pilsner</div><div class="item-desc">• 0.25 – 3,00 · • 0.40 – 5,00</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Carlsberg Special Brew</div><div class="item-desc">• 0.25 – 5,00 · • 0.40 – 7,50</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Grimbergen Double</div><div class="item-desc">• 0.30 – 5,00 · • 0.50 – 7,50</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Grimbergen Triple</div><div class="item-desc">• 0.30 – 5,00 · • 0.50 – 7,50</div></div><div class="item-right"></div></div>
                     </div>
                 </section>
 
                 <!-- BIRRE IN BOTTIGLIA -->
-                <section id="it-cat-birra-bottiglia" class="category-panel">
+                <section id="it-cat-birra-bottiglia" class="category-panel" aria-labelledby="it-birra-bottiglia-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍺 Birre in bottiglia</h2>
+                        <h2 id="it-birra-bottiglia-title" class="category-title">🍺 Birre in bottiglia</h2>
                         <div class="category-note">Selezione in bottiglia</div>
                     </div>
                     <div class="items-list">
@@ -1042,10 +861,10 @@
                     </div>
                 </section>
 
-                <!-- SERVIZIO -->
-                <section id="it-cat-servizio" class="category-panel">
+                <!-- SERVIZIO E COPERTO -->
+                <section id="it-cat-servizio" class="category-panel" aria-labelledby="it-servizio-title">
                     <div class="category-header">
-                        <h2 class="category-title">💳 Servizio e coperto</h2>
+                        <h2 id="it-servizio-title" class="category-title">💳 Servizio e coperto</h2>
                         <div class="category-note">Applicato a persona</div>
                     </div>
                     <div class="items-list">
@@ -1057,20 +876,14 @@
         </main>
 
         <!-- FOOTER IT -->
-        <footer class="footer">
+        <footer class="footer" role="contentinfo">
             <div class="footer-inner">
                 <div class="footer-row">
-                    <div class="footer-pill">
-                        <span class="footer-pill-icon">📶</span>
-                        <span>Wi‑Fi disponibile in sala – chiedi al personale per credenziali</span>
-                    </div>
-                    <div class="footer-copy">
-                        © Beer Garden · Menu digitale ufficiale · Apertura da NFC ottimizzata per smartphone
-                    </div>
+                    <div class="footer-pill"><span>📶</span><span>Wi‑Fi disponibile – chiedi al personale</span></div>
+                    <div class="footer-copy">© Beer Garden · Menu digitale · NFC optimized</div>
                 </div>
-                <div>
-                    Questo menù è pensato per essere aperto da tag NFC al tavolo: layout compatto, testo leggibile,
-                    pannelli touch-friendly e struttura coerente.
+                <div style="color:var(--text-muted);font-size:0.82rem;">
+                    Menù ottimizzato per apertura da tag NFC: layout compatto, testo leggibile, pannelli touch-friendly.
                 </div>
             </div>
         </footer>
@@ -1080,37 +893,20 @@
     <div class="lang-view" id="view-en">
 
         <!-- HERO EN -->
-        <section class="hero">
+        <section class="hero" aria-labelledby="hero-title-en">
             <div class="hero-inner">
                 <div class="hero-content">
                     <div class="hero-kicker">🍺 BEER GARDEN</div>
-                    <h1 class="hero-title">Official Digital Menu</h1>
-                    <p class="hero-subtitle">
-                        Browse the menu directly from your phone – designed for NFC opening, with a premium layout and
-                        green palette.
-                    </p>
-                    <div class="hero-tags">
-                        <div class="hero-tag">Selected burgers</div>
-                        <div class="hero-tag">Grilled meats</div>
-                        <div class="hero-tag">Draught &amp; bottled beers</div>
-                        <div class="hero-tag">Artisanal desserts</div>
-                    </div>
-                    <p class="hero-note">
-                        Scroll the categories at the top, tap to open panels and quickly find what you’re looking for.
-                    </p>
+                    <h1 id="hero-title-en" class="hero-title">Digital Menu</h1>
+                    <p class="hero-subtitle">Select a category and browse the menu quickly and professionally.</p>
                 </div>
-                <div class="hero-image">
+                <div class="hero-image" aria-hidden="true">
                     <div class="hero-overlay">
-                        <div class="hero-overlay-title">Beer Garden Experience</div>
-                        <div class="hero-overlay-line">
-                            Pub atmosphere, selected meats, gourmet burgers and characterful beers.
-                        </div>
-                        <div class="hero-overlay-line">
-                            Menu optimized for smartphones – perfect for NFC tag opening at the table.
-                        </div>
+                        <div class="hero-overlay-title">Beer Garden</div>
+                        <div class="hero-overlay-line">Quality · Tradition · Selection</div>
                         <div class="hero-overlay-pill">
                             <span class="hero-overlay-pill-dot"></span>
-                            <span>Tap &amp; Enjoy – Always up-to-date menu</span>
+                            <span>Updated menu</span>
                         </div>
                     </div>
                 </div>
@@ -1118,20 +914,20 @@
         </section>
 
         <!-- HEADER EN -->
-        <header class="header">
+        <header class="header" role="banner">
             <div class="header-inner">
                 <div class="header-top-row">
-                    <div class="header-logo">Beer Garden · Menu</div>
-                    <div class="header-badge">Scroll categories &amp; tap to open</div>
+                    <div class="header-logo">Beer Garden</div>
+                    <div class="header-badge">Digital Menu</div>
                 </div>
-                <div class="category-scroll">
+                <div class="category-scroll" role="navigation" aria-label="Categories">
                     <button class="cat-btn active" data-target="en-cat-starters"><span class="emoji">🍽️</span><span>Starters</span></button>
                     <button class="cat-btn" data-target="en-cat-first"><span class="emoji">🍝</span><span>First courses</span></button>
                     <button class="cat-btn" data-target="en-cat-main"><span class="emoji">🥩</span><span>Main courses</span></button>
                     <button class="cat-btn" data-target="en-cat-bruschetta"><span class="emoji">🍞</span><span>Bruschetta</span></button>
-                    <button class="cat-btn" data-target="en-cat-burgers"><span class="emoji">🥪</span><span>Burgers &amp; sandwiches</span></button>
+                    <button class="cat-btn" data-target="en-cat-burgers"><span class="emoji">🥪</span><span>Burgers</span></button>
                     <button class="cat-btn" data-target="en-cat-meats"><span class="emoji">🥩</span><span>Our meats</span></button>
-                    <button class="cat-btn" data-target="en-cat-sides"><span class="emoji">🥗</span><span>Side dishes</span></button>
+                    <button class="cat-btn" data-target="en-cat-sides"><span class="emoji">🥗</span><span>Sides</span></button>
                     <button class="cat-btn" data-target="en-cat-desserts"><span class="emoji">🍰</span><span>Desserts</span></button>
                     <button class="cat-btn" data-target="en-cat-drinks"><span class="emoji">🥤</span><span>Drinks</span></button>
                     <button class="cat-btn" data-target="en-cat-draught"><span class="emoji">🍺</span><span>Draught beers</span></button>
@@ -1142,14 +938,14 @@
         </header>
 
         <!-- MAIN EN -->
-        <main class="main">
+        <main class="main" role="main">
             <div class="main-inner">
 
                 <!-- STARTERS -->
-                <section id="en-cat-starters" class="category-panel active">
+                <section id="en-cat-starters" class="category-panel active" aria-labelledby="en-starters-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍽️ Starters</h2>
-                        <div class="category-note">Beer Garden starters selection</div>
+                        <h2 id="en-starters-title" class="category-title">🍽️ Starters</h2>
+                        <div class="category-note">Selection of starters</div>
                     </div>
                     <div class="items-list">
                         <div class="item"><div class="item-left"><div class="item-name">Beef tartare</div></div><div class="item-right">16,00</div></div>
@@ -1162,11 +958,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Provola cheese rolls</div>
-                                <div class="item-desc">
-                                    • Provola &amp; ham – 9,00<br>
-                                    • Provola, ham &amp; corn – 9,00<br>
-                                    • Provola with mushrooms – 9,00
-                                </div>
+                                <div class="item-desc">• Provola &amp; ham – 9,00 · • Provola, ham &amp; corn – 9,00 · • Provola with mushrooms – 9,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -1174,25 +966,18 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Buffalo mozzarella bites</div>
-                                <div class="item-desc">
-                                    • Grilled with speck – 7,00<br>
-                                    • With smoked salmon – 10,00
-                                </div>
+                                <div class="item-desc">• Grilled with speck – 7,00 · • With smoked salmon – 10,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
 
                         <div class="item"><div class="item-left"><div class="item-name">Grilled spicy “Diavoletti”</div></div><div class="item-right">8,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Spicy scamorza cheese with porcini</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Spicy scamorza with porcini</div></div><div class="item-right">10,00</div></div>
 
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Eggplant parmigiana</div>
-                                <div class="item-desc">
-                                    • Red – 7,00<br>
-                                    • White – 7,00<br>
-                                    • With basil pesto – 7,00
-                                </div>
+                                <div class="item-desc">• Red – 7,00 · • White – 7,00 · • With basil pesto – 7,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -1205,10 +990,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Special provola cheeses</div>
-                                <div class="item-desc">
-                                    • Sicilian (eggplant, provola, Grana) – 9,00<br>
-                                    • Beer Garden (provola, green peppers, Grana) – 10,00
-                                </div>
+                                <div class="item-desc">• Sicilian – 9,00 · • Beer Garden – 10,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -1219,10 +1001,7 @@
                         <div class="item">
                             <div class="item-left">
                                 <div class="item-name">Fried gnocchi</div>
-                                <div class="item-desc">
-                                    • Garlic &amp; parsley – 7,00<br>
-                                    • Cacio e pepe – 9,00
-                                </div>
+                                <div class="item-desc">• Garlic &amp; parsley – 7,00 · • Cacio e pepe – 9,00</div>
                             </div>
                             <div class="item-right"></div>
                         </div>
@@ -1232,15 +1011,15 @@
                 </section>
 
                 <!-- FIRST COURSES -->
-                <section id="en-cat-first" class="category-panel">
+                <section id="en-cat-first" class="category-panel" aria-labelledby="en-first-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍝 First courses</h2>
+                        <h2 id="en-first-title" class="category-title">🍝 First courses</h2>
                         <div class="category-note">Pasta &amp; house specialties</div>
                     </div>
                     <div class="items-list">
                         <div class="item"><div class="item-left"><div class="item-name">Maccheroncini “Genovese” style</div></div><div class="item-right">14,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Fusilli with Neapolitan ragù</div></div><div class="item-right">14,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Ravioloni with lemon, buffalo mozzarella &amp; pistachio</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Ravioloni with lemon, buffalo &amp; pistachio</div></div><div class="item-right">10,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Pasta &amp; potatoes with mussels</div></div><div class="item-right">13,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">“Mancini” rigatoni with peas, crispy guanciale &amp; pecorino</div></div><div class="item-right">13,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Gnocchi with swordfish, mussels, eggplant &amp; mint</div></div><div class="item-right">13,00</div></div>
@@ -1253,13 +1032,13 @@
                 </section>
 
                 <!-- MAIN COURSES -->
-                <section id="en-cat-main" class="category-panel">
+                <section id="en-cat-main" class="category-panel" aria-labelledby="en-main-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥩 Main courses</h2>
+                        <h2 id="en-main-title" class="category-title">🥩 Main courses</h2>
                         <div class="category-note">Grilled &amp; oven-baked mains</div>
                     </div>
                     <div class="items-list">
-                        <div class="item"><div class="item-left"><div class="item-name">Meatballs in tomato sauce (served in pan)</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Meatballs in tomato sauce (pan)</div></div><div class="item-right">10,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Mixed grilled pork with fries (sausage, ribs, chop)</div></div><div class="item-right">15,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Grilled walnut meatballs with fries</div></div><div class="item-right">10,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Grilled steak with fries</div></div><div class="item-right">22,00</div></div>
@@ -1270,9 +1049,9 @@
                 </section>
 
                 <!-- BRUSCHETTA -->
-                <section id="en-cat-bruschetta" class="category-panel">
+                <section id="en-cat-bruschetta" class="category-panel" aria-labelledby="en-bruschetta-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍞 Bruschetta</h2>
+                        <h2 id="en-bruschetta-title" class="category-title">🍞 Bruschetta</h2>
                         <div class="category-note">(2 slices per portion)</div>
                     </div>
                     <div class="items-list">
@@ -1289,46 +1068,46 @@
                     </div>
                 </section>
 
-                <!-- BURGERS & SANDWICHES -->
-                <section id="en-cat-burgers" class="category-panel">
+                <!-- BURGERS -->
+                <section id="en-cat-burgers" class="category-panel" aria-labelledby="en-burgers-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥪 Burgers &amp; sandwiches</h2>
-                        <div class="category-note">Beer Garden signature burgers</div>
+                        <h2 id="en-burgers-title" class="category-title">🥪 Burgers &amp; sandwiches</h2>
+                        <div class="category-note">Signature burgers</div>
                     </div>
                     <div class="items-list">
-                        <div class="item"><div class="item-left"><div class="item-name">Beer Garden</div><div class="item-desc">200g scottona burger, speck, tomato, Philadelphia, onion, lettuce, cheese slice, mayonnaise, fries on plate</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Beer Garden</div><div class="item-desc">200g scottona burger, speck, tomato, Philadelphia, onion, lettuce, cheese slice, mayonnaise, fries</div></div><div class="item-right">10,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">A’ Scarol</div><div class="item-desc">Burger, buffalo mozzarella, scarole cream, Parmesan, baked potatoes</div></div><div class="item-right">10,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Pull</div><div class="item-desc">Pulled pork, guacamole, provola, iceberg lettuce, caramelized onion</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Pull</div><div class="item-desc">Pulled pork, guacamole, provola, iceberg, caramelized onion</div></div><div class="item-right">10,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Grandma’s sandwich</div><div class="item-desc">Meatballs in ragù, buffalo mozzarella, Parmesan cream, baked potatoes</div></div><div class="item-right">10,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">“Sorry for the delay”</div><div class="item-desc">Scottona burger, breaded provola, Parma ham, tomato, onion, iceberg lettuce, BBQ sauce</div></div><div class="item-right">10,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Braveheart</div><div class="item-desc">Double sausage burger, provola, cheddar, onion, BBQ sauce</div></div><div class="item-right">9,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">“Sorry for the delay”</div><div class="item-desc">Scottona burger, breaded provola, Parma ham, tomato, onion, iceberg, BBQ</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Braveheart</div><div class="item-desc">Double sausage burger, provola, cheddar, onion, BBQ</div></div><div class="item-right">9,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Campagnolo</div><div class="item-desc">Eggplant, mushrooms, rustic potatoes, double buffalo mozzarella</div></div><div class="item-right">10,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Porchino</div><div class="item-desc">200g Angus burger, porcini mushrooms, scamorza, Parmesan cream, tomato, rocket</div></div><div class="item-right">10,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Trinità</div><div class="item-desc">Porchetta, provola, eggplant “funghetto” style</div></div><div class="item-right">8,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Porchino</div><div class="item-desc">200g Angus burger, porcini, scamorza, Parmesan cream, tomato, rocket</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Trinità</div><div class="item-desc">Porchetta, provola, eggplant “funghetto”</div></div><div class="item-right">8,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Corsaro</div><div class="item-desc">Sausage, broccoli, provola, fries</div></div><div class="item-right">9,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Our vegetarian</div><div class="item-desc">Red parmigiana, basil, baked potatoes, Parmesan cream</div></div><div class="item-right">9,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Il Padrone</div><div class="item-desc">Roasted pork loin, provola, baked potatoes, Grana, iceberg lettuce</div></div><div class="item-right">9,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Vegan</div><div class="item-desc">Vegan burger, red onion chutney, iceberg lettuce, battered vegetables, rustic fries</div></div><div class="item-right">9,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Il Padrone</div><div class="item-desc">Roasted pork loin, provola, baked potatoes, Grana, iceberg</div></div><div class="item-right">9,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Vegan</div><div class="item-desc">Vegan burger, red onion chutney, iceberg, battered vegetables, rustic fries</div></div><div class="item-right">9,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Italiano Vero</div><div class="item-desc">Walnut meatballs, pesto, provola, semi-dried cherry tomatoes</div></div><div class="item-right">10,00</div></div>
-                        <div class="item"><div class="item-left"><div class="item-name">Simpatico</div><div class="item-desc">Smoked salmon, iceberg lettuce, crab meat, cocktail sauce, lemon</div></div><div class="item-right">10,00</div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Simpatico</div><div class="item-desc">Smoked salmon, iceberg, crab meat, cocktail sauce, lemon</div></div><div class="item-right">10,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Azz</div><div class="item-desc">Sausage, spicy scamorza, baked potatoes, roasted Parmesan cream (homemade)</div></div><div class="item-right">13,00</div></div>
                         <div class="item"><div class="item-left"><div class="item-name">Old scottona burger</div><div class="item-desc">200g scottona, fondue, basil tomato, 30-month Parmesan, pear jam, rocket</div></div><div class="item-right">13,00</div></div>
                     </div>
                 </section>
 
                 <!-- OUR MEATS -->
-                <section id="en-cat-meats" class="category-panel">
+                <section id="en-cat-meats" class="category-panel" aria-labelledby="en-meats-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥩 Our meats</h2>
+                        <h2 id="en-meats-title" class="category-title">🥩 Our meats</h2>
                         <div class="category-note">All together, divided into subcategories</div>
                     </div>
 
-                    <div class="subcat-bar">
+                    <div class="subcat-bar" role="tablist" aria-label="Meat subcategories">
                         <button class="subcat-btn active" data-subtarget="en-sub-burgers">🍔 Burgers</button>
                         <button class="subcat-btn" data-subtarget="en-sub-steaks">🥩 Steaks</button>
                         <button class="subcat-btn" data-subtarget="en-sub-entrecote">🥩 Entrecote</button>
                         <button class="subcat-btn" data-subtarget="en-sub-sliced">🔪 Sliced meats</button>
-                        <button class="subcat-btn" data-subtarget="en-sub-special">🍗 Meat specialties</button>
+                        <button class="subcat-btn" data-subtarget="en-sub-special">🍗 Specialties</button>
                     </div>
 
                     <div id="en-sub-burgers" class="subcat-panel active">
@@ -1369,9 +1148,9 @@
                         <div class="subcat-title">🔪 Sliced meats</div>
                         <div class="items-list">
                             <div class="item"><div class="item-left"><div class="item-name">Sliced entrecote with rocket &amp; Grana shavings</div></div><div class="item-right">18,00</div></div>
-                            <div class="item"><div class="item-left"><div class="item-name">Sliced entrecote with porcini* &amp; “fossa” cheese</div></div><div class="item-right">20,00</div></div>
+                            <div class="item"><div class="item-left"><div class="item-name">Sliced entrecote with porcini* &amp; fossa cheese</div></div><div class="item-right">20,00</div></div>
                             <div class="item"><div class="item-left"><div class="item-name">Sliced chicken with seasonal vegetables</div></div><div class="item-right">15,00</div></div>
-                            <div class="item"><div class="item-left"><div class="item-name">Sliced black pork with cherry tomatoes &amp; “fossa” cheese</div></div><div class="item-right">15,00</div></div>
+                            <div class="item"><div class="item-left"><div class="item-name">Sliced black pork with cherry tomatoes &amp; fossa cheese</div></div><div class="item-right">15,00</div></div>
                         </div>
                     </div>
 
@@ -1387,10 +1166,10 @@
                     </div>
                 </section>
 
-                <!-- SIDE DISHES -->
-                <section id="en-cat-sides" class="category-panel">
+                <!-- SIDES -->
+                <section id="en-cat-sides" class="category-panel" aria-labelledby="en-sides-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥗 Side dishes</h2>
+                        <h2 id="en-sides-title" class="category-title">🥗 Side dishes</h2>
                         <div class="category-note">Vegetables &amp; sides</div>
                     </div>
                     <div class="items-list">
@@ -1406,9 +1185,9 @@
                 </section>
 
                 <!-- DESSERTS -->
-                <section id="en-cat-desserts" class="category-panel">
+                <section id="en-cat-desserts" class="category-panel" aria-labelledby="en-desserts-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍰 Desserts</h2>
+                        <h2 id="en-desserts-title" class="category-title">🍰 Desserts</h2>
                         <div class="category-note">Desserts &amp; sweets</div>
                     </div>
                     <div class="items-list">
@@ -1429,9 +1208,9 @@
                 </section>
 
                 <!-- DRINKS -->
-                <section id="en-cat-drinks" class="category-panel">
+                <section id="en-cat-drinks" class="category-panel" aria-labelledby="en-drinks-title">
                     <div class="category-header">
-                        <h2 class="category-title">🥤 Drinks</h2>
+                        <h2 id="en-drinks-title" class="category-title">🥤 Drinks</h2>
                         <div class="category-note">Water &amp; soft drinks</div>
                     </div>
                     <div class="items-list">
@@ -1448,69 +1227,24 @@
                 </section>
 
                 <!-- DRAUGHT BEERS -->
-                <section id="en-cat-draught" class="category-panel">
+                <section id="en-cat-draught" class="category-panel" aria-labelledby="en-draught-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍺 Draught beers</h2>
+                        <h2 id="en-draught-title" class="category-title">🍺 Draught beers</h2>
                         <div class="category-note">On tap selection</div>
                     </div>
                     <div class="items-list">
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Tucher Hefe Weizen</div>
-                                <div class="item-desc">
-                                    • 0.30 – 5,00<br>
-                                    • 0.50 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Carlsberg Pilsner</div>
-                                <div class="item-desc">
-                                    • 0.25 – 3,00<br>
-                                    • 0.40 – 5,00
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Carlsberg Special Brew</div>
-                                <div class="item-desc">
-                                    • 0.25 – 5,00<br>
-                                    • 0.40 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Grimbergen Double</div>
-                                <div class="item-desc">
-                                    • 0.30 – 5,00<br>
-                                    • 0.50 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
-                        <div class="item">
-                            <div class="item-left">
-                                <div class="item-name">Grimbergen Triple</div>
-                                <div class="item-desc">
-                                    • 0.30 – 5,00<br>
-                                    • 0.50 – 7,50
-                                </div>
-                            </div>
-                            <div class="item-right"></div>
-                        </div>
+                        <div class="item"><div class="item-left"><div class="item-name">Tucher Hefe Weizen</div><div class="item-desc">• 0.30 – 5,00 · • 0.50 – 7,50</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Carlsberg Pilsner</div><div class="item-desc">• 0.25 – 3,00 · • 0.40 – 5,00</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Carlsberg Special Brew</div><div class="item-desc">• 0.25 – 5,00 · • 0.40 – 7,50</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Grimbergen Double</div><div class="item-desc">• 0.30 – 5,00 · • 0.50 – 7,50</div></div><div class="item-right"></div></div>
+                        <div class="item"><div class="item-left"><div class="item-name">Grimbergen Triple</div><div class="item-desc">• 0.30 – 5,00 · • 0.50 – 7,50</div></div><div class="item-right"></div></div>
                     </div>
                 </section>
 
                 <!-- BOTTLED BEERS -->
-                <section id="en-cat-bottled" class="category-panel">
+                <section id="en-cat-bottled" class="category-panel" aria-labelledby="en-bottled-title">
                     <div class="category-header">
-                        <h2 class="category-title">🍺 Bottled beers</h2>
+                        <h2 id="en-bottled-title" class="category-title">🍺 Bottled beers</h2>
                         <div class="category-note">Bottle selection</div>
                     </div>
                     <div class="items-list">
@@ -1527,9 +1261,9 @@
                 </section>
 
                 <!-- SERVICE & COVER -->
-                <section id="en-cat-service" class="category-panel">
+                <section id="en-cat-service" class="category-panel" aria-labelledby="en-service-title">
                     <div class="category-header">
-                        <h2 class="category-title">💳 Service &amp; cover</h2>
+                        <h2 id="en-service-title" class="category-title">💳 Service &amp; cover</h2>
                         <div class="category-note">Charged per person</div>
                     </div>
                     <div class="items-list">
@@ -1541,20 +1275,14 @@
         </main>
 
         <!-- FOOTER EN -->
-        <footer class="footer">
+        <footer class="footer" role="contentinfo">
             <div class="footer-inner">
                 <div class="footer-row">
-                    <div class="footer-pill">
-                        <span class="footer-pill-icon">📶</span>
-                        <span>Wi‑Fi available in the room – ask staff for credentials</span>
-                    </div>
-                    <div class="footer-copy">
-                        © Beer Garden · Official digital menu · NFC opening optimized for smartphones
-                    </div>
+                    <div class="footer-pill"><span>📶</span><span>Wi‑Fi available – ask staff</span></div>
+                    <div class="footer-copy">© Beer Garden · Digital menu · NFC optimized</div>
                 </div>
-                <div>
-                    This menu is designed to be opened via NFC tag at the table: compact layout, readable text,
-                    touch-friendly panels and consistent structure.
+                <div style="color:var(--text-muted);font-size:0.82rem;">
+                    This menu is designed to be opened via NFC tag at the table: compact layout, readable text, touch-friendly panels.
                 </div>
             </div>
         </footer>
@@ -1563,12 +1291,13 @@
 </div>
 
 <script>
-    // LANGUAGE OVERLAY
+    // Elements
     const langOverlay = document.getElementById('lang-overlay');
     const langButtons = document.querySelectorAll('.lang-btn');
     const viewIt = document.getElementById('view-it');
     const viewEn = document.getElementById('view-en');
 
+    // Activate language view
     function activateLanguage(lang) {
         if (lang === 'it') {
             viewIt.classList.add('active');
@@ -1578,8 +1307,12 @@
             viewIt.classList.remove('active');
         }
         langOverlay.style.display = 'none';
+        // Ensure category systems are initialized for visible view
+        setupCategorySystem(viewIt);
+        setupCategorySystem(viewEn);
     }
 
+    // Language buttons
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
@@ -1587,13 +1320,19 @@
         });
     });
 
-    // Default: show overlay, hide both views
+    // Default: show overlay, hide views
     viewIt.classList.remove('active');
     viewEn.classList.remove('active');
 
-    // CATEGORY HANDLING (ITALIAN & ENGLISH SEPARATE)
-
+    // Category and subcategory system per view
     function setupCategorySystem(viewRoot) {
+        if (!viewRoot) return;
+
+        // Avoid double-binding
+        const already = viewRoot.dataset.bound;
+        if (already === 'true') return;
+        viewRoot.dataset.bound = 'true';
+
         const catButtons = viewRoot.querySelectorAll('.cat-btn');
         const catPanels = viewRoot.querySelectorAll('.category-panel');
 
@@ -1607,6 +1346,7 @@
                 catPanels.forEach(panel => {
                     if (panel.id === targetId) {
                         panel.classList.add('active');
+                        // smooth scroll to panel top within main
                         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     } else {
                         panel.classList.remove('active');
@@ -1636,6 +1376,33 @@
         });
     }
 
+    // Accessibility: allow closing overlay with Escape to default to Italian
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && langOverlay.style.display !== 'none') {
+            activateLanguage('it');
+        }
+    });
+
+    // If user has a preferred language stored in localStorage, auto-select
+    try {
+        const preferred = localStorage.getItem('bg_preferred_lang');
+        if (preferred === 'it' || preferred === 'en') {
+            // small delay to ensure overlay visible then hide
+            setTimeout(() => activateLanguage(preferred), 250);
+        }
+    } catch (err) {
+        // ignore storage errors
+    }
+
+    // Save preference when user selects language
+    langButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            try { localStorage.setItem('bg_preferred_lang', lang); } catch (e) {}
+        });
+    });
+
+    // Initialize both views' category systems (safe)
     setupCategorySystem(viewIt);
     setupCategorySystem(viewEn);
 </script>
