@@ -48,6 +48,7 @@
     .header-controls{display:flex;gap:10px;align-items:center}
     .badge{font-size:.82rem;color:var(--muted);padding:8px 12px;border-radius:999px;border:1px solid rgba(10,20,18,0.04);background:#fff;font-weight:700}
     .toggle-gf{padding:8px 10px;border-radius:999px;border:1px solid rgba(10,20,18,0.06);background:linear-gradient(180deg,#FFFFFF,#F3FBF6);color:var(--green-dark);font-weight:700;cursor:pointer}
+    .lang-toggle{padding:8px 10px;border-radius:999px;border:1px solid rgba(10,20,18,0.06);background:#fff;color:var(--green-mid);font-weight:700;cursor:pointer}
 
     /* Categories */
     .categories{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;align-items:center}
@@ -70,7 +71,7 @@
     .container{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
     .legend{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:.95rem}
     .legend .gf{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:linear-gradient(180deg,#F3FBF6,#FFFFFF);border:1px solid rgba(10,20,18,0.04);font-weight:800;color:var(--green-mid)}
-    .legend .chef{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,var(--green-mid),var(--green-light));color:#fff;font-weight:800}
+    .legend .note{color:var(--muted);font-size:.9rem}
 
     .category-panel{display:none;border-radius:12px;background:var(--panel);border:var(--border);box-shadow:var(--shadow);padding:18px}
     .category-panel.active{display:block}
@@ -87,9 +88,14 @@
     .price{font-weight:900;color:var(--green-mid);white-space:nowrap}
 
     .gf-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:linear-gradient(180deg,#F3FBF6,#FFFFFF);color:var(--green-mid);font-weight:800;border:1px solid rgba(10,20,18,0.04);font-size:.82rem}
-    .chef-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:10px;background:linear-gradient(135deg,var(--green-mid),var(--green-light));color:#fff;font-weight:900;font-size:.82rem}
 
     .subsection-title{font-weight:800;color:var(--muted);margin:8px 0}
+    .subcat-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .subcat-btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(10,20,18,0.06);background:#fff;color:var(--green-mid);font-weight:700;cursor:pointer}
+    .subcat-btn.active{background:linear-gradient(135deg,var(--green-mid),var(--green-light));color:#fff;border-color:transparent}
+
+    .subcat-panel{display:none}
+    .subcat-panel.active{display:block}
 
     /* Footer */
     .footer{margin-top:auto;border-top:1px solid rgba(10,20,18,0.04);background:linear-gradient(180deg,#FFFFFF,#F7FBF8)}
@@ -107,7 +113,7 @@
 <body>
   <div class="page">
 
-    <!-- LANGUAGE OVERLAY -->
+    <!-- LANGUAGE OVERLAY (first open) -->
     <div class="lang-overlay" id="lang-overlay" role="dialog" aria-modal="true" aria-label="Selezione lingua">
       <div class="lang-card" role="document">
         <div class="lang-logo">Beer Garden</div>
@@ -117,7 +123,7 @@
           <button class="lang-btn primary" data-lang="it" aria-label="Italiano">🇮🇹 Italiano</button>
           <button class="lang-btn" data-lang="en" aria-label="English">🇬🇧 English</button>
         </div>
-        <div class="lang-note">Puoi cambiare lingua in qualsiasi momento usando il pulsante in alto.</div>
+        <div class="lang-note">Puoi cambiare lingua in qualsiasi momento con il pulsante in alto.</div>
       </div>
     </div>
 
@@ -132,6 +138,7 @@
             <div class="header-controls">
               <div class="badge">Menu Digitale Ufficiale</div>
               <button class="toggle-gf" id="toggle-gf-it" aria-pressed="false">Mostra solo GF</button>
+              <button class="lang-toggle" id="switch-to-en">English</button>
             </div>
           </div>
 
@@ -173,8 +180,7 @@
 
         <div class="legend">
           <div class="gf">GF — può essere preparato senza glutine</div>
-          <div class="chef">Chef — consigliato</div>
-          <div style="color:var(--muted);margin-left:auto">Prezzi chiari · Preparazioni su richiesta</div>
+          <div class="note">Le bistecche/entrecote: prezzo indicato al etto (€/etto)</div>
         </div>
 
         <!-- ANTIPASTI -->
@@ -185,15 +191,10 @@
           </div>
           <div class="items">
             <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Tartare di manzo</div><div class="gf-badge">GF</div></div><div class="item-desc">Carne selezionata, condimenti a parte.</div></div><div class="price">16,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Insalata di Cous Cous</div><div class="item-desc">Contiene glutine</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Cous Cous di verdure</div><div class="item-desc">Contiene glutine</div></div><div class="price">8,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Cous Cous di mare</div><div class="item-desc">Contiene glutine</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Carpaccio di pecorino e noci</div><div class="gf-badge">GF</div></div><div class="item-desc">Servito con olio EVO e limone.</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Grana alla brace a limone</div><div class="gf-badge">GF</div></div><div class="price">10,00</div></div>
 
             <div class="item"><div class="item-left"><div class="item-name">Involtini di provola — Provola e prosciutto</div></div><div class="price">9,00</div></div>
@@ -211,9 +212,7 @@
             <div class="item"><div class="item-left"><div class="item-name">Parmigiana di melanzane — Al pesto di basilico</div></div><div class="price">7,00</div></div>
 
             <div class="item"><div class="item-left"><div class="item-name">Cannellone di pane gratinato con mousse al prosciutto cotto</div></div><div class="price">7,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Torta rustica salsiccia, friarielli e provola</div></div><div class="price">7,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Pizza di scarole</div></div><div class="price">7,00</div></div>
 
             <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Caprese (mozzarella di bufala, pomodoro, basilico, olio EVO)</div><div class="gf-badge">GF</div></div></div><div class="price">9,00</div></div>
@@ -261,17 +260,11 @@
           </div>
           <div class="items">
             <div class="item"><div class="item-left"><div class="item-name">Tegamino di polpette al sugo</div><div class="item-desc">Su richiesta: versione senza pangrattato disponibile</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Grigliata mista di maiale con patate fritte (salsiccia, tracchia, costoletta)</div><div class="item-desc">Preparazione GF su richiesta</div></div><div class="price">15,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Polpette con noci alla brace con patatine fritte</div><div class="item-desc">Possibile versione GF</div></div><div class="price">10,00</div></div>
-
-            <div class="item highlight"><div class="item-left"><div class="name-row"><div class="item-name">Bistecca alla brace con patatine fritte</div><div class="gf-badge">GF</div><div class="chef-badge">Consigliata</div></div><div class="item-desc">Taglio selezionato, servita al punto richiesto.</div></div><div class="price">22,00</div></div>
-
+            <div class="item"><div class="item-left"><div class="item-name">Bistecca alla brace con patatine fritte</div><div class="item-desc">Taglio selezionato, servita al punto richiesto.</div></div><div class="price">22,00</div></div>
             <div class="item"><div class="item-left"><div class="item-name">Stinco di maiale con patate al forno</div></div><div class="price">15,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Pesce spada alla brace con insalatina e noci</div><div class="item-desc">Preparazione senza glutine</div></div><div class="price">18,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Pork Ribs (homemade)</div><div class="item-desc">Preparazione casalinga, servite con salsa BBQ.</div></div><div class="price">18,00</div></div>
           </div>
         </section>
@@ -323,15 +316,22 @@
           </div>
         </section>
 
-        <!-- LE NOSTRE CARNI -->
+        <!-- LE NOSTRE CARNI (with subcategories) -->
         <section id="it-carni" class="category-panel" aria-labelledby="title-it-carni">
           <div class="category-header">
             <h2 id="title-it-carni" class="category-title">🥩 Le nostre carni</h2>
-            <div class="category-note">Sottocategorie chiare: Hamburger, Bistecche €/etto, Entrecote €/etto, Tagliate, Specialità</div>
+            <div class="category-note">Sottocategorie: Hamburger, Bistecche (€/etto), Entrecote (€/etto), Tagliate, Specialità</div>
           </div>
 
-          <!-- HAMBURGER -->
-          <div class="subsection">
+          <div class="subcat-bar" role="tablist" aria-label="Sottocategorie carni">
+            <button class="subcat-btn active" data-sub="it-sub-hamburger">🍔 Hamburger</button>
+            <button class="subcat-btn" data-sub="it-sub-bistecche">🥩 Bistecche</button>
+            <button class="subcat-btn" data-sub="it-sub-entrecote">🥩 Entrecote</button>
+            <button class="subcat-btn" data-sub="it-sub-tagliate">🔪 Tagliate</button>
+            <button class="subcat-btn" data-sub="it-sub-specialita">🍗 Specialità</button>
+          </div>
+
+          <div id="it-sub-hamburger" class="subcat-panel active">
             <div class="subsection-title">🍔 Hamburger (serviti con patate rustiche)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Hamburger Angus irlandese 280g</div></div><div class="price">13,00</div></div>
@@ -341,8 +341,7 @@
             </div>
           </div>
 
-          <!-- BISTECCHE -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="it-sub-bistecche" class="subcat-panel">
             <div class="subsection-title">🥩 Bistecche — prezzo indicato al etto (€/etto)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Costata prussiana premium</div></div><div class="price">6,50 €/etto</div></div>
@@ -353,8 +352,7 @@
             </div>
           </div>
 
-          <!-- ENTRECOTE -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="it-sub-entrecote" class="subcat-panel">
             <div class="subsection-title">🥩 Entrecote — prezzo indicato al etto (€/etto)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Black Angus americano</div></div><div class="price">8,50 €/etto</div></div>
@@ -364,8 +362,7 @@
             </div>
           </div>
 
-          <!-- TAGLIATE -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="it-sub-tagliate" class="subcat-panel">
             <div class="subsection-title">🔪 Tagliate</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Tagliata di entrecote con rucola e scaglie di grana</div></div><div class="price">18,00</div></div>
@@ -375,8 +372,7 @@
             </div>
           </div>
 
-          <!-- SPECIALITÀ -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="it-sub-specialita" class="subcat-panel">
             <div class="subsection-title">🍗 Specialità di carne (alla brace / al forno)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Grigliata mista di maiale</div></div><div class="price">15,00</div></div>
@@ -527,6 +523,7 @@
             <div class="header-controls">
               <div class="badge">Official Digital Menu</div>
               <button class="toggle-gf" id="toggle-gf-en" aria-pressed="false">Show GF only</button>
+              <button class="lang-toggle" id="switch-to-it">Italiano</button>
             </div>
           </div>
 
@@ -567,8 +564,7 @@
       <div class="container">
         <div class="legend">
           <div class="gf">GF — can be prepared gluten-free</div>
-          <div class="chef">Chef — recommended</div>
-          <div style="color:var(--muted);margin-left:auto">Clear pricing · Preparations on request</div>
+          <div class="note">Steaks/entrecote: price per 100g (€/100g)</div>
         </div>
 
         <!-- STARTERS EN -->
@@ -579,15 +575,10 @@
           </div>
           <div class="items">
             <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Beef tartare</div><div class="gf-badge">GF</div></div><div class="item-desc">Selected meat, dressing on the side.</div></div><div class="price">16,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Cous Cous salad</div><div class="item-desc">Contains gluten</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Vegetable Cous Cous</div><div class="item-desc">Contains gluten</div></div><div class="price">8,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Seafood Cous Cous</div><div class="item-desc">Contains gluten</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Pecorino carpaccio with walnuts</div><div class="gf-badge">GF</div></div><div class="item-desc">Served with EVO oil and lemon.</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Grilled Grana cheese with lemon</div><div class="gf-badge">GF</div></div><div class="price">10,00</div></div>
 
             <div class="item"><div class="item-left"><div class="item-name">Provola rolls — Provola & ham</div></div><div class="price">9,00</div></div>
@@ -605,9 +596,7 @@
             <div class="item"><div class="item-left"><div class="item-name">Eggplant parmigiana — Basil pesto</div></div><div class="price">7,00</div></div>
 
             <div class="item"><div class="item-left"><div class="item-name">Gratin bread cannellone with ham mousse</div></div><div class="price">7,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Rustic pie with sausage, friarielli & provola</div></div><div class="price">7,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Scarole pizza</div></div><div class="price">7,00</div></div>
 
             <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Caprese (buffalo mozzarella, tomato, basil, EVO oil)</div><div class="gf-badge">GF</div></div></div><div class="price">9,00</div></div>
@@ -655,17 +644,11 @@
           </div>
           <div class="items">
             <div class="item"><div class="item-left"><div class="item-name">Pan of meatballs in tomato sauce</div><div class="item-desc">GF version available on request</div></div><div class="price">10,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Mixed pork grill with fries (sausage, tracchia, chop)</div><div class="item-desc">GF preparation on request</div></div><div class="price">15,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Meatballs with walnuts on the grill with fries</div><div class="item-desc">GF option possible</div></div><div class="price">10,00</div></div>
-
-            <div class="item highlight"><div class="item-left"><div class="name-row"><div class="item-name">Grilled steak with fries</div><div class="gf-badge">GF</div><div class="chef-badge">Chef pick</div></div><div class="item-desc">Selected cut, served to requested doneness.</div></div><div class="price">22,00</div></div>
-
+            <div class="item"><div class="item-left"><div class="item-name">Grilled steak with fries</div><div class="item-desc">Selected cut, served to requested doneness.</div></div><div class="price">22,00</div></div>
             <div class="item"><div class="item-left"><div class="item-name">Pork shank with roasted potatoes</div></div><div class="price">15,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Grilled swordfish with salad & walnuts</div><div class="item-desc">Gluten-free preparation</div></div><div class="price">18,00</div></div>
-
             <div class="item"><div class="item-left"><div class="item-name">Pork Ribs homemade</div><div class="item-desc">House preparation, served with BBQ sauce.</div></div><div class="price">18,00</div></div>
           </div>
         </section>
@@ -717,15 +700,22 @@
           </div>
         </section>
 
-        <!-- OUR MEATS EN -->
+        <!-- OUR MEATS EN (with subcategories) -->
         <section id="en-meats" class="category-panel" aria-labelledby="title-en-meats">
           <div class="category-header">
             <h2 id="title-en-meats" class="category-title">🥩 Our meats</h2>
-            <div class="category-note">Clear subcategories: Burgers, Steaks €/100g, Entrecote €/100g, Sliced cuts, Specialties</div>
+            <div class="category-note">Subcategories: Burgers, Steaks €/100g, Entrecote €/100g, Sliced cuts, Specialties</div>
           </div>
 
-          <!-- BURGERS EN -->
-          <div class="subsection">
+          <div class="subcat-bar" role="tablist" aria-label="Meat subcategories">
+            <button class="subcat-btn active" data-sub="en-sub-burgers">🍔 Burgers</button>
+            <button class="subcat-btn" data-sub="en-sub-steaks">🥩 Steaks</button>
+            <button class="subcat-btn" data-sub="en-sub-entrecote">🥩 Entrecote</button>
+            <button class="subcat-btn" data-sub="en-sub-sliced">🔪 Sliced cuts</button>
+            <button class="subcat-btn" data-sub="en-sub-specialties">🍗 Specialties</button>
+          </div>
+
+          <div id="en-sub-burgers" class="subcat-panel active">
             <div class="subsection-title">🍔 Burgers (served with rustic fries)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Angus Irish burger 280g</div></div><div class="price">13,00</div></div>
@@ -735,8 +725,7 @@
             </div>
           </div>
 
-          <!-- STEAKS EN -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="en-sub-steaks" class="subcat-panel">
             <div class="subsection-title">🥩 Steaks — price per 100g (€/100g)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Prussian premium ribeye</div></div><div class="price">6,50 €/100g</div></div>
@@ -747,8 +736,7 @@
             </div>
           </div>
 
-          <!-- ENTRECOTE EN -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="en-sub-entrecote" class="subcat-panel">
             <div class="subsection-title">🥩 Entrecote — price per 100g (€/100g)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Black Angus US</div></div><div class="price">8,50 €/100g</div></div>
@@ -758,8 +746,7 @@
             </div>
           </div>
 
-          <!-- SLICED CUTS EN -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="en-sub-sliced" class="subcat-panel">
             <div class="subsection-title">🔪 Sliced cuts</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Sliced entrecote with rocket & parmesan flakes</div></div><div class="price">18,00</div></div>
@@ -769,8 +756,7 @@
             </div>
           </div>
 
-          <!-- SPECIALTIES EN -->
-          <div class="subsection" style="margin-top:12px">
+          <div id="en-sub-specialties" class="subcat-panel">
             <div class="subsection-title">🍗 Meat specialties (grill / oven)</div>
             <div class="items">
               <div class="item"><div class="item-left"><div class="item-name">Mixed pork grill</div></div><div class="price">15,00</div></div>
@@ -781,6 +767,9 @@
             </div>
           </div>
         </section>
+
+        <!-- SIDES, DESSERTS, DRINKS, DRAUGHT, BOTTLED, SERVICE EN (mirrors IT content) -->
+        <!-- For brevity these sections are included above in the Italian view and mirrored here with English labels and identical items/prices. -->
 
         <!-- SIDES EN -->
         <section id="en-sides" class="category-panel" aria-labelledby="title-en-sides">
@@ -913,12 +902,15 @@
   </div>
 
   <script>
-    // Language overlay handling
+    // Elements
     const overlay = document.getElementById('lang-overlay');
     const langBtns = document.querySelectorAll('.lang-btn');
     const viewIt = document.getElementById('view-it');
     const viewEn = document.getElementById('view-en');
+    const switchToEn = document.getElementById('switch-to-en');
+    const switchToIt = document.getElementById('switch-to-it');
 
+    // Show chosen view and persist
     function showView(lang){
       if(lang==='en'){
         viewEn.style.display='block';
@@ -928,18 +920,23 @@
         viewEn.style.display='none';
       }
       overlay.style.display='none';
+      try{ localStorage.setItem('bg_lang', lang); }catch(e){}
       // activate first category in chosen view
       const firstCat = (lang==='en') ? viewEn.querySelector('.cat') : viewIt.querySelector('.cat');
       if(firstCat) activateCategory(firstCat);
     }
 
+    // Overlay buttons
     langBtns.forEach(b=>{
       b.addEventListener('click', ()=> {
         const lang = b.getAttribute('data-lang');
-        try{ localStorage.setItem('bg_lang', lang); }catch(e){}
         showView(lang);
       });
     });
+
+    // Header language toggles (visible)
+    if(switchToEn) switchToEn.addEventListener('click', ()=> showView('en'));
+    if(switchToIt) switchToIt.addEventListener('click', ()=> showView('it'));
 
     // Auto-open if preference exists
     try{
@@ -947,7 +944,7 @@
       if(pref==='it' || pref==='en'){ setTimeout(()=>showView(pref),200); }
     }catch(e){}
 
-    // Category navigation (works per view)
+    // Category navigation (per view)
     function activateCategory(catEl){
       if(!catEl) return;
       const viewRoot = catEl.closest('main');
@@ -992,10 +989,31 @@
     setupGFToggle('toggle-gf-it', viewIt);
     setupGFToggle('toggle-gf-en', viewEn);
 
+    // Subcategory handling (works per view)
+    document.querySelectorAll('.subcat-bar').forEach(bar=>{
+      bar.querySelectorAll('.subcat-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const parentBar = btn.closest('.subcat-bar');
+          parentBar.querySelectorAll('.subcat-btn').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          const target = btn.getAttribute('data-sub');
+          const viewRoot = btn.closest('main');
+          if(!viewRoot) return;
+          // hide panels within same category container
+          const container = btn.closest('.category-panel');
+          if(!container) return;
+          container.querySelectorAll('.subcat-panel').forEach(p=>p.classList.remove('active'));
+          const panel = container.querySelector('#' + target);
+          if(panel) panel.classList.add('active');
+          // scroll container into view
+          container.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+    });
+
     // Accessibility: Escape closes overlay and defaults to Italian
     document.addEventListener('keydown', (e)=>{
       if(e.key==='Escape' && overlay.style.display!=='none'){
-        try{ localStorage.setItem('bg_lang','it'); }catch(e){}
         showView('it');
       }
     });
