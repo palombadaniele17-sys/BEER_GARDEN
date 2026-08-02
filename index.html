@@ -1,986 +1,803 @@
 <!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8" />
-  <title>Beer Garden — Menu Digitale</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#F6F7F8;
-      --panel:#FFFFFF;
-      --green-dark:#072f2a;
-      --green-mid:#0a5b48;
-      --green-light:#7BC59A;
-      --text:#0B1A18;
-      --muted:#6B7A76;
-      --radius-lg:14px;
-      --radius-md:10px;
-      --shadow:0 10px 30px rgba(10,20,18,0.06);
-      --pill:999px;
-      --border:1px solid rgba(10,20,18,0.06);
-    }
+<html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beer Garden — Trecase</title>
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,"Helvetica Neue",Arial;color:var(--text);background:linear-gradient(180deg,#FBFDFB 0%, #F0F4F2 100%);-webkit-font-smoothing:antialiased}
+<!-- Font Eleganti e Moderni da Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Syne:wght@600;700;800&amp;display=swap" rel="stylesheet">
 
-    .page{min-height:100vh;display:flex;flex-direction:column}
+<style>
+:root {
+  --bg: #FAF8F5;            /* Sabbia finissima mediterranea, chiaro ed elegante */
+  --panel: #FFFFFF;        /* Bianco puro per i blocchi menu */
+  --accent: #1E4636;       /* Verde marino profondo, lussuoso e fresco */
+  --accent-gold: #C29B53;  /* Oro caldo raffinato per i prezzi e dettagli */
+  --text: #242220;         /* Antracite caldo per massima leggibilità sotto la luce */
+  --muted: #6E6861;        /* Grigio terra per le spiegazioni brevi */
+  --shadow: 0 16px 40px rgba(30, 70, 54, 0.06);
+  --radius: 22px;
+  --max: 600px;
+}
 
-    /* LANGUAGE OVERLAY */
-    .lang-overlay{position:fixed;inset:0;z-index:160;display:flex;align-items:center;justify-content:center;padding:28px;background:rgba(6,12,11,0.06);backdrop-filter:blur(6px)}
-    .lang-card{width:100%;max-width:520px;border-radius:16px;background:linear-gradient(180deg,#FFFFFF,#F7FBF8);border:var(--border);box-shadow:var(--shadow);padding:22px;text-align:center}
-    .lang-logo{font-weight:800;letter-spacing:.12em;color:var(--green-mid);text-transform:uppercase;margin-bottom:8px}
-    .lang-title{font-size:1.15rem;font-weight:800;margin:0 0 8px;color:var(--text)}
-    .lang-sub{color:var(--muted);font-size:.95rem;margin-bottom:14px}
-    .lang-buttons{display:flex;gap:12px;justify-content:center}
-    .lang-btn{min-width:160px;padding:12px 14px;border-radius:var(--pill);border:1px solid rgba(10,20,18,0.06);background:#FFFFFF;color:var(--text);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:transform .12s}
-    .lang-btn.primary{background:linear-gradient(135deg,var(--green-dark),var(--green-light));color:#fff;border-color:rgba(10,20,18,0.06)}
-    .lang-note{color:var(--muted);font-size:.82rem;margin-top:10px}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Header */
-    .header{position:sticky;top:0;z-index:140;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(10,20,18,0.04)}
-    .header-inner{max-width:1200px;margin:0 auto;padding:12px 18px;display:flex;flex-direction:column;gap:10px}
-    .header-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .logo{font-weight:800;letter-spacing:.12em;color:var(--green-mid);text-transform:uppercase}
-    .header-controls{display:flex;gap:10px;align-items:center}
-    .badge{font-size:.82rem;color:var(--muted);padding:8px 12px;border-radius:999px;border:1px solid rgba(10,20,18,0.04);background:#fff;font-weight:700}
-    .lang-toggle{padding:8px 10px;border-radius:999px;border:1px solid rgba(10,20,18,0.06);background:#fff;color:var(--green-mid);font-weight:700;cursor:pointer}
+html, body {
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(32, 70, 54, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(194, 155, 83, 0.03) 0%, transparent 50%);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
 
-    /* Categories: single horizontal scrollable row, fixed */
-    .categories-wrap{overflow:hidden}
-    .categories{display:flex;gap:10px;align-items:center;padding:8px 6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-    .categories::-webkit-scrollbar{display:none}
-    .cat{flex:0 0 auto;padding:10px 14px;border-radius:999px;background:#FFFFFF;border:1px solid rgba(10,20,18,0.04);color:var(--muted);font-weight:700;display:inline-flex;align-items:center;gap:8px;justify-content:center;cursor:pointer;transition:all .12s;white-space:nowrap}
-    .cat.active{background:linear-gradient(135deg,var(--green-mid),var(--green-light));color:#fff;box-shadow:0 8px 20px rgba(10,80,64,0.08)}
-    .cat:focus{outline:2px solid rgba(10,107,86,0.14);outline-offset:2px}
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 16px 16px 80px;
+}
 
-    /* Hero minimal */
-    .hero{padding:14px 18px}
-    .hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .hero-kicker{font-weight:800;color:var(--green-mid);text-transform:uppercase;letter-spacing:.08em}
-    .hero-title{font-size:1.25rem;font-weight:800;margin:0;color:var(--text)}
+/* SCHERMATA SELEZIONE LINGUA INIZIALE */
+#language-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
 
-    /* Main */
-    .main{flex:1;padding:18px 16px 84px}
-    .container{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
-    .legend{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:.95rem}
-    .legend .gf{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:linear-gradient(180deg,#F3FBF6,#FFFFFF);border:1px solid rgba(10,20,18,0.04);font-weight:800;color:var(--green-mid)}
-    .legend .note{color:var(--muted);font-size:.9rem}
+#language-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
-    .category-panel{display:none;border-radius:12px;background:var(--panel);border:var(--border);box-shadow:var(--shadow);padding:18px}
-    .category-panel.active{display:block}
-    .category-header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
-    .category-title{font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--text)}
-    .category-note{color:var(--muted);font-size:.9rem}
+.lang-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 46px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 6px;
+  letter-spacing: -1.5px;
+}
 
-    .items{display:flex;flex-direction:column;gap:12px}
-    .item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px;border-radius:10px;background:#FFFFFF;border:1px solid rgba(10,20,18,0.04)}
-    .item-left{flex:1;min-width:0}
-    .name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .item-name{font-weight:800;color:var(--text)}
-    .item-desc{color:var(--muted);margin-top:6px;font-size:.92rem;line-height:1.28}
-    .price{font-weight:900;color:var(--green-mid);white-space:nowrap}
+.lang-sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 45px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-    .gf-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:linear-gradient(180deg,#F3FBF6,#FFFFFF);color:var(--green-mid);font-weight:800;border:1px solid rgba(10,20,18,0.04);font-size:.82rem}
+.lang-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 280px;
+}
 
-    .subsection-title{font-weight:800;color:var(--muted);margin:8px 0}
-    .subcat-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-    .subcat-btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(10,20,18,0.06);background:#fff;color:var(--green-mid);font-weight:700;cursor:pointer}
-    .subcat-btn.active{background:linear-gradient(135deg,var(--green-mid),var(--green-light));color:#fff;border-color:transparent}
+.lang-btn {
+  background: var(--panel);
+  border: 1px solid rgba(30, 70, 54, 0.12);
+  color: var(--text);
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: var(--shadow);
+  transition: all 0.25s ease;
+}
 
-    .subcat-panel{display:none}
-    .subcat-panel.active{display:block}
+.lang-btn:hover {
+  border-color: var(--accent);
+  background: rgba(30, 70, 54, 0.04);
+  transform: translateY(-2px);
+}
 
-    /* Footer */
-    .footer{margin-top:auto;border-top:1px solid rgba(10,20,18,0.04);background:linear-gradient(180deg,#FFFFFF,#F7FBF8)}
-    .footer-inner{max-width:1200px;margin:0 auto;padding:12px 16px 18px;display:flex;flex-direction:column;gap:8px;color:var(--muted)}
-    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-    .footer-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid rgba(10,20,18,0.04);color:var(--text);font-weight:700}
+/* CONTENUTO MENU (CELATO ALL'AVVIO) */
+#main-content { display: none; }
 
-    @media(max-width:820px){
-      .hero-inner{flex-direction:column;align-items:flex-start;gap:10px}
-      .categories{padding:8px 6px}
-    }
-  </style>
+/* INSEGNA LOCALE */
+.hero {
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 70, 54, 0.04);
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  margin-bottom: 22px;
+}
+
+.hero-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -1.5px;
+}
+
+.hero-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+/* BARRA DI NAVIGAZIONE ORIZZONTALE */
+.nav-container {
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  margin-bottom: 25px;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 4px 12px;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.pill {
+  flex: 0 0 auto;
+  border: 1px solid rgba(30, 70, 54, 0.06);
+  background: var(--panel);
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pill:hover, .pill.active {
+  background: var(--accent);
+  color: #FFFFFF;
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(30, 70, 54, 0.15);
+}
+
+/* LE MINI-PAGINE DEL MENU */
+.page {
+  display: none;
+  background: var(--panel);
+  border-radius: var(--radius);
+  border: 1px solid rgba(30, 70, 54, 0.03);
+  box-shadow: var(--shadow);
+  padding: 26px 22px;
+  margin-bottom: 25px;
+  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page.active { display: block; }
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.page h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page h2 span { color: var(--accent-gold); }
+
+/* SINGOLA VOCE DEL MENU */
+.item {
+  padding: 16px 0;
+  border-bottom: 1px solid #F2EFEA;
+}
+.item:last-child { border-bottom: none; }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.name { font-weight: 600; font-size: 15px; color: var(--text); line-height: 1.35; }
+.price { font-weight: 700; font-size: 15px; color: var(--accent-gold); white-space: nowrap; }
+.desc { margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.5; font-weight: 400; }
+
+.back-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 13px;
+  border: 1px solid rgba(30, 70, 54, 0.1);
+  background: rgba(30, 70, 54, 0.02);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.back-btn:hover { background: rgba(30, 70, 54, 0.06); }
+
+/* SEZIONE FOOTER */
+.footer { text-align: center; margin-top: 45px; font-size: 12px; color: var(--muted); }
+.footer strong { color: var(--accent); }
+
+.quote-box {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  padding: 0 20px;
+  line-height: 1.6;
+}
+
+.wifi-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid rgba(30, 70, 54, 0.06);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+</style>
 </head>
+
 <body>
-  <div class="page">
 
-    <!-- LANGUAGE OVERLAY -->
-    <div class="lang-overlay" id="lang-overlay" role="dialog" aria-modal="true" aria-label="Selezione lingua">
-      <div class="lang-card" role="document">
-        <div class="lang-logo">Beer Garden</div>
-        <div class="lang-title">Scegli la lingua</div>
-        <div class="lang-sub">Seleziona la lingua preferita per consultare il menù.</div>
-        <div class="lang-buttons" role="group" aria-label="Lingue">
-          <button class="lang-btn primary" data-lang="it" aria-label="Italiano">🇮🇹 Italiano</button>
-          <button class="lang-btn" data-lang="en" aria-label="English">🇬🇧 English</button>
-        </div>
-        <div class="lang-note">Puoi cambiare lingua in qualsiasi momento con il pulsante in alto.</div>
-      </div>
-    </div>
-
-    <!-- ITALIAN VIEW -->
-    <main id="view-it" class="lang-view" lang="it" style="display:none">
-
-      <!-- HEADER -->
-      <header class="header" role="banner">
-        <div class="header-inner">
-          <div class="header-top">
-            <div class="logo">Beer Garden</div>
-            <div class="header-controls">
-              <div class="badge">Menu Digitale</div>
-              <button class="lang-toggle" id="switch-to-en">English</button>
-            </div>
-          </div>
-
-          <!-- categories: single horizontal row -->
-          <div class="categories-wrap" aria-hidden="false">
-            <nav class="categories" role="navigation" aria-label="Categorie">
-              <div class="cat active" data-target="it-antipasti">Antipasti</div>
-              <div class="cat" data-target="it-primi">Primi</div>
-              <div class="cat" data-target="it-secondi">Secondi</div>
-              <div class="cat" data-target="it-bruschette">Bruschette</div>
-              <div class="cat" data-target="it-panini">Panini</div>
-              <div class="cat" data-target="it-carni">Le nostre carni</div>
-              <div class="cat" data-target="it-contorni">Contorni</div>
-              <div class="cat" data-target="it-dessert">Dessert</div>
-              <div class="cat" data-target="it-bibite">Bibite</div>
-              <div class="cat" data-target="it-birra-spina">Birre alla spina</div>
-              <div class="cat" data-target="it-birra-bottiglia">Birre in bottiglia</div>
-              <div class="cat" data-target="it-servizio">Servizio</div>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <!-- HERO minimal -->
-      <section class="hero" aria-labelledby="hero-it">
-        <div class="hero-inner">
-          <div>
-            <div class="hero-kicker">🍺 BEER GARDEN</div>
-            <h1 id="hero-it" class="hero-title">Menu</h1>
-          </div>
-        </div>
-      </section>
-
-      <div class="container">
-        <div class="legend">
-          <div class="gf">GF — può essere preparato senza glutine</div>
-          <div class="note" style="margin-left:auto">Per allergeni chiedere al personale.</div>
-        </div>
-
-        <!-- ANTIPASTI -->
-        <section id="it-antipasti" class="category-panel active" aria-labelledby="title-it-antipasti">
-          <div class="category-header">
-            <h2 id="title-it-antipasti" class="category-title">🍽️ Antipasti</h2>
-            <div class="category-note">Selezione completa</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Tartare di manzo</div><div class="gf-badge">GF</div></div><div class="item-desc">Carne selezionata, condimenti a parte.</div></div><div class="price">16,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Insalata di Cous Cous</div><div class="item-desc">Contiene glutine</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Cous Cous di verdure</div><div class="item-desc">Contiene glutine</div></div><div class="price">8,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Cous Cous di mare</div><div class="item-desc">Contiene glutine</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Carpaccio di pecorino e noci</div><div class="gf-badge">GF</div></div><div class="item-desc">Servito con olio EVO e limone.</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grana alla brace a limone</div><div class="gf-badge">GF</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Involtini di provola — Provola e prosciutto</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Involtini di provola — Provola, prosciutto e mais</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Involtini di provola — Provola ai funghi</div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Bocconcini di bufala — Alla brace con speck</div><div class="item-desc">Alla brace; versione con salmone disponibile</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Bocconcini di bufala — Con salmone</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Diavoletti alla brace</div></div><div class="price">8,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Scamorza piccante ai porcini</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Parmigiana di melanzane — Rossa</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Parmigiana di melanzane — Bianca</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Parmigiana di melanzane — Al pesto di basilico</div></div><div class="price">7,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Cannellone di pane gratinato con mousse al prosciutto cotto</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Torta rustica salsiccia, friarielli e provola</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pizza di scarole</div></div><div class="price">7,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Caprese (mozzarella di bufala, pomodoro, basilico, olio EVO)</div><div class="gf-badge">GF</div></div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Provola Siciliana (melanzane, provola, grana)</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Provola Beer Garden (provola, peperoni verdi, grana)</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Fagioli alla messicana</div><div class="item-desc">Preparazione senza glutine disponibile</div></div><div class="price">7,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Focaccia dello chef</div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Gnocchi fritti — Aglio e prezzemolo</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Gnocchi fritti — Cacio e pepe</div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Barchetta di patate ripiena (ricotta e pesto di agrumi – 3 pezzi)</div><div class="gf-badge">GF</div></div><div class="price">7,00</div></div>
-          </div>
-        </section>
-
-        <!-- PRIMI PIATTI -->
-        <section id="it-primi" class="category-panel" aria-labelledby="title-it-primi">
-          <div class="category-header">
-            <h2 id="title-it-primi" class="category-title">🍝 Primi piatti</h2>
-            <div class="category-note">Pasta & primi della casa — opzione senza glutine disponibile</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Maccheroncini alla genovese</div></div><div class="price">14,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fusilli al ragù napoletano</div></div><div class="price">14,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ravioloni limone, bufala e pistacchio</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pasta e patate con cozze</div><div class="item-desc">Su richiesta: pasta senza glutine</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lumache rigate “Mancini” con piselli, guanciale croccante, pecorino</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Gnocchi con pesce spada, cozze, melanzane e menta</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ravioli cacio e pepe con burro, salvia e polvere di liquirizia</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fusilli porcini, noci e salsiccia</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Paccheri freschi con patate, speck IGP, fiori di zucca, provola affumicata</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Gnocchi farine e patate con melanzane a funghetto, salsiccia piccante, provola</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ravioli ricotta e mozzarella ai tre pomodori</div></div><div class="price">10,00</div></div>
-          </div>
-        </section>
-
-        <!-- SECONDI PIATTI -->
-        <section id="it-secondi" class="category-panel" aria-labelledby="title-it-secondi">
-          <div class="category-header">
-            <h2 id="title-it-secondi" class="category-title">🥩 Secondi piatti</h2>
-            <div class="category-note">Alla brace e al forno — molte preparazioni possono essere adattate GF</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Tegamino di polpette al sugo</div><div class="item-desc">Su richiesta: versione senza pangrattato disponibile</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grigliata mista di maiale con patate fritte (salsiccia, tracchia, costoletta)</div><div class="item-desc">Preparazione GF su richiesta</div></div><div class="price">15,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Polpette con noci alla brace con patatine fritte</div><div class="item-desc">Possibile versione GF</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Bistecca alla brace con patatine fritte</div><div class="item-desc">Taglio selezionato, servita al punto richiesto.</div></div><div class="price">22,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Stinco di maiale con patate al forno</div></div><div class="price">15,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pesce spada alla brace con insalatina e noci</div><div class="item-desc">Preparazione senza glutine</div></div><div class="price">18,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pork Ribs (homemade)</div><div class="item-desc">Preparazione casalinga, servite con salsa BBQ.</div></div><div class="price">18,00</div></div>
-          </div>
-        </section>
-
-        <!-- BRUSCHETTE -->
-        <section id="it-bruschette" class="category-panel" aria-labelledby="title-it-bruschette">
-          <div class="category-header">
-            <h2 id="title-it-bruschette" class="category-title">🍞 Bruschette</h2>
-            <div class="category-note">(2 fette per porzione)</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Tartufo</div><div class="item-desc">Crema di pecorino al tartufo, crudo di Parma, miele al tartufo</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Solita</div><div class="item-desc">Pomodoro, aglio, olio EVO</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tricolore</div><div class="item-desc">Pomodoro, mozzarella, basilico, olio EVO</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Mais</div><div class="item-desc">Mais, salsa tonnata, maionese</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Zingara</div><div class="item-desc">Speck, philadelphia</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Saporita</div><div class="item-desc">Pomodoro, speck, mozzarella, olio EVO</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Norvegese</div><div class="item-desc">Burro, salmone</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Killer</div><div class="item-desc">Broccoli, salsiccia</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sfiziosa</div><div class="item-desc">Speck, provola</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Rustichella</div><div class="item-desc">Philadelphia, zucchine grigliate, cipolle caramellate</div></div><div class="price">4,00</div></div>
-          </div>
-        </section>
-
-        <!-- PANINI -->
-        <section id="it-panini" class="category-panel" aria-labelledby="title-it-panini">
-          <div class="category-header">
-            <h2 id="title-it-panini" class="category-title">🥪 Panini</h2>
-            <div class="category-note">Panini Beer Garden</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Beer Garden</div><div class="item-desc">Hamburger scottona 200g, speck, pomodoro, philadelphia, cipolla, insalata, sottiletta, maionese</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">A’ Scarol</div><div class="item-desc">Hamburger, bufala, crema di scarola, parmigiano, patate al forno</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pull</div><div class="item-desc">Pulled pork, guacamole, provola, iceberg, cipolla caramellata</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Panino della Nonna</div><div class="item-desc">Polpette al ragù, bufala, crema al parmigiano, patate al forno</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Scusate il Ritardo</div><div class="item-desc">Hamburger scottona, provola panata, crudo di Parma, pomodoro, cipolla, iceberg, BBQ</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Braveheart</div><div class="item-desc">Doppio hamburger salsiccia, provola, cheddar, cipolla, BBQ</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Campagnolo</div><div class="item-desc">Melanzane, funghetti, patate rustiche, doppia bufala</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Porchino</div><div class="item-desc">Hamburger Angus 200g, porcini, scamorza, crema parmigiano, pomodoro, rucola</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Trinità</div><div class="item-desc">Porchetta, provola, melanzane a funghetto</div></div><div class="price">8,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Corsaro</div><div class="item-desc">Salsiccia, broccoli, provola, patatine fritte</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Il “Nostro” Vegetariano</div><div class="item-desc">Parmigiana rossa, basilico, patate al forno, crema al parmigiano</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Il Padrone</div><div class="item-desc">Arista al forno, provola, patate al forno, grana, iceberg</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Vegano</div><div class="item-desc">Hamburger vegano, chutney cipolla rossa, iceberg, verdure pastellate, patatine rustiche</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Italiano Vero</div><div class="item-desc">Polpette con noci, pesto, provola, pomodorini semi-dry</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Simpatico</div><div class="item-desc">Salmone affumicato, iceberg, polpa di granchio, salsa rosa, limone</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Azz</div><div class="item-desc">Salsiccia, scamorza piccante, patate al forno, crema parmigiano arrost homemade</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Il caro vecchio hamburger di scottona</div><div class="item-desc">Scottona 200g, fonduta, pomodoro al basilico, parmigiano 30 mesi, marmellata di pere, rucola</div></div><div class="price">13,00</div></div>
-          </div>
-        </section>
-
-        <!-- LE NOSTRE CARNI (with subcategories) -->
-        <section id="it-carni" class="category-panel" aria-labelledby="title-it-carni">
-          <div class="category-header">
-            <h2 id="title-it-carni" class="category-title">🥩 Le nostre carni</h2>
-            <div class="category-note">Sottocategorie: Hamburger, Bistecche (€/etto), Entrecote (€/etto), Tagliate, Specialità</div>
-          </div>
-
-          <div class="subcat-bar" role="tablist" aria-label="Sottocategorie carni">
-            <button class="subcat-btn active" data-sub="it-sub-hamburger">🍔 Hamburger</button>
-            <button class="subcat-btn" data-sub="it-sub-bistecche">🥩 Bistecche</button>
-            <button class="subcat-btn" data-sub="it-sub-entrecote">🥩 Entrecote</button>
-            <button class="subcat-btn" data-sub="it-sub-tagliate">🔪 Tagliate</button>
-            <button class="subcat-btn" data-sub="it-sub-specialita">🍗 Specialità</button>
-          </div>
-
-          <div id="it-sub-hamburger" class="subcat-panel active">
-            <div class="subsection-title">🍔 Hamburger (serviti con patate rustiche)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Hamburger Angus irlandese 280g</div></div><div class="price">13,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Hamburger Scottona 280g</div></div><div class="price">13,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Hamburger Chianina 300g</div></div><div class="price">16,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Hamburger Rubia Gallega 300g</div></div><div class="price">16,00</div></div>
-            </div>
-          </div>
-
-          <div id="it-sub-bistecche" class="subcat-panel">
-            <div class="subsection-title">🥩 Bistecche — prezzo indicato al etto (€/etto)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Costata prussiana premium</div></div><div class="price">6,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Costata di scottona</div></div><div class="price">6,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Fiorentina prussiana premium</div></div><div class="price">6,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Costata bavarese</div></div><div class="price">6,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Costata vacca grassa</div></div><div class="price">6,50 €/etto</div></div>
-            </div>
-          </div>
-
-          <div id="it-sub-entrecote" class="subcat-panel">
-            <div class="subsection-title">🥩 Entrecote — prezzo indicato al etto (€/etto)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Black Angus americano</div></div><div class="price">8,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Angus argentino</div></div><div class="price">7,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Angus irlandese</div></div><div class="price">6,50 €/etto</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Prussiana premium</div></div><div class="price">6,50 €/etto</div></div>
-            </div>
-          </div>
-
-          <div id="it-sub-tagliate" class="subcat-panel">
-            <div class="subsection-title">🔪 Tagliate</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Tagliata di entrecote con rucola e scaglie di grana</div></div><div class="price">18,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Tagliata di entrecote con porcini e formaggio di fossa</div></div><div class="price">20,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Tagliata di pollo con verdure di stagione</div></div><div class="price">15,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Tagliata di maiale nero con pomodorini e formaggio di fossa</div></div><div class="price">15,00</div></div>
-            </div>
-          </div>
-
-          <div id="it-sub-specialita" class="subcat-panel">
-            <div class="subsection-title">🍗 Specialità di carne (alla brace / al forno)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Grigliata mista di maiale</div></div><div class="price">15,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Polpette con noci alla brace</div></div><div class="price">10,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Bistecca alla brace</div></div><div class="price">22,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Stinco di maiale</div></div><div class="price">15,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Pork Ribs homemade</div></div><div class="price">18,00</div></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CONTORNI -->
-        <section id="it-contorni" class="category-panel" aria-labelledby="title-it-contorni">
-          <div class="category-header">
-            <h2 id="title-it-contorni" class="category-title">🥗 Contorni</h2>
-            <div class="category-note">Verdure e contorni</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Melanzane a funghetto</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Patate al forno</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Verdure grigliate</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Broccoli</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Scarole</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Insalata verde</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Funghi trifolati</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Peperoncini verdi</div></div><div class="price">5,00</div></div>
-          </div>
-        </section>
-
-        <!-- DESSERT -->
-        <section id="it-dessert" class="category-panel" aria-labelledby="title-it-dessert">
-          <div class="category-header">
-            <h2 id="title-it-dessert" class="category-title">🍰 Dessert</h2>
-            <div class="category-note">Dolci e dessert</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Cheesecake (vari gusti)</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Semifreddo all’amarena</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Semifreddo Oreo</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Semifreddo mandorlato</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Semifreddo Lotus</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tiramisù</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tiramisù al pistacchio</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Delizia al limone</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Crema catalana</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Profiteroles</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Millefoglie scomposta</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Babà alla nutella</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Panna cotta (vari gusti)</div></div><div class="price">5,00</div></div>
-          </div>
-        </section>
-
-        <!-- BIBITE -->
-        <section id="it-bibite" class="category-panel" aria-labelledby="title-it-bibite">
-          <div class="category-header">
-            <h2 id="title-it-bibite" class="category-title">🥤 Bibite</h2>
-            <div class="category-note">Acqua e soft drink</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Acqua Ferrarelle 75cl</div></div><div class="price">2,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Acqua Electa 75cl</div></div><div class="price">2,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Spezi</div></div><div class="price">3,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Spezi Zero</div></div><div class="price">3,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sangria Roqueta 1lt</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Coca Cola</div></div><div class="price">2,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Coca Cola Zero</div></div><div class="price">2,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fanta</div></div><div class="price">2,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sprite</div></div><div class="price">2,50</div></div>
-          </div>
-        </section>
-
-        <!-- BIRRE ALLA SPINA -->
-        <section id="it-birra-spina" class="category-panel" aria-labelledby="title-it-birra-spina">
-          <div class="category-header">
-            <h2 id="title-it-birra-spina" class="category-title">🍺 Birre alla spina</h2>
-            <div class="category-note">Selezione alla spina — misure indicate</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Tucher Hefe Weizen — 0.30</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tucher Hefe Weizen — 0.50</div></div><div class="price">7,50</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Pilsner — 0.25</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Pilsner — 0.40</div></div><div class="price">5,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Special Brew — 0.25</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Special Brew — 0.40</div></div><div class="price">7,50</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Double — 0.30</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Double — 0.50</div></div><div class="price">7,50</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Triple — 0.30</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Triple — 0.50</div></div><div class="price">7,50</div></div>
-          </div>
-        </section>
-
-        <!-- BIRRE IN BOTTIGLIA -->
-        <section id="it-birra-bottiglia" class="category-panel" aria-labelledby="title-it-birra-bottiglia">
-          <div class="category-header">
-            <h2 id="title-it-birra-bottiglia" class="category-title">🍺 Birre in bottiglia</h2>
-            <div class="category-note">Selezione in bottiglia</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Bayreuther Hell</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">König Ludwig Weissebier</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Riegele Augustus</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Riegele Privat</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Riegele analcolica</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ambar Special (gluten free)</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lupulus</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lupulus Brune</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Hobgoblin IPA</div></div><div class="price">7,00</div></div>
-          </div>
-        </section>
-
-        <!-- SERVIZIO -->
-        <section id="it-servizio" class="category-panel" aria-labelledby="title-it-servizio">
-          <div class="category-header">
-            <h2 id="title-it-servizio" class="category-title">💳 Servizio e coperto</h2>
-            <div class="category-note">Applicato a persona</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Servizio e coperto (a persona)</div></div><div class="price">2,00</div></div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- FOOTER -->
-      <footer class="footer" role="contentinfo">
-        <div class="footer-inner">
-          <div class="footer-row">
-            <div class="footer-pill">📶 Wi‑Fi disponibile — chiedi al personale</div>
-            <div class="footer-copy">© Beer Garden</div>
-          </div>
-          <div style="color:var(--muted);font-size:.92rem">Per allergeni chiedere al personale.</div>
-        </div>
-      </footer>
-    </main>
-
-    <!-- ENGLISH VIEW -->
-    <main id="view-en" class="lang-view" lang="en" style="display:none">
-
-      <!-- HEADER EN -->
-      <header class="header" role="banner">
-        <div class="header-inner">
-          <div class="header-top">
-            <div class="logo">Beer Garden</div>
-            <div class="header-controls">
-              <div class="badge">Digital Menu</div>
-              <button class="lang-toggle" id="switch-to-it">Italiano</button>
-            </div>
-          </div>
-
-          <div class="categories-wrap">
-            <nav class="categories" role="navigation" aria-label="Categories">
-              <div class="cat active" data-target="en-starters">Starters</div>
-              <div class="cat" data-target="en-first">First courses</div>
-              <div class="cat" data-target="en-mains">Main courses</div>
-              <div class="cat" data-target="en-bruschetta">Bruschetta</div>
-              <div class="cat" data-target="en-burgers">Burgers</div>
-              <div class="cat" data-target="en-meats">Our meats</div>
-              <div class="cat" data-target="en-sides">Sides</div>
-              <div class="cat" data-target="en-desserts">Desserts</div>
-              <div class="cat" data-target="en-drinks">Drinks</div>
-              <div class="cat" data-target="en-draught">Draught</div>
-              <div class="cat" data-target="en-bottled">Bottled</div>
-              <div class="cat" data-target="en-service">Service</div>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <!-- HERO EN minimal -->
-      <section class="hero" aria-labelledby="hero-en">
-        <div class="hero-inner">
-          <div>
-            <div class="hero-kicker">🍺 BEER GARDEN</div>
-            <h1 id="hero-en" class="hero-title">Menu</h1>
-          </div>
-        </div>
-      </section>
-
-      <div class="container">
-        <div class="legend">
-          <div class="gf">GF — can be prepared gluten-free</div>
-          <div class="note" style="margin-left:auto">For allergens ask staff.</div>
-        </div>
-
-        <!-- STARTERS -->
-        <section id="en-starters" class="category-panel active">
-          <div class="category-header">
-            <h2 class="category-title">🍽️ Starters</h2>
-            <div class="category-note">Complete selection</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Beef tartare</div><div class="gf-badge">GF</div></div><div class="item-desc">Selected meat, dressing on the side.</div></div><div class="price">16,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Cous Cous salad</div><div class="item-desc">Contains gluten</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Vegetable Cous Cous</div><div class="item-desc">Contains gluten</div></div><div class="price">8,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Seafood Cous Cous</div><div class="item-desc">Contains gluten</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Pecorino carpaccio with walnuts</div><div class="gf-badge">GF</div></div><div class="item-desc">Served with EVO oil and lemon.</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grilled Grana cheese with lemon</div><div class="gf-badge">GF</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Provola rolls — Provola & ham</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Provola rolls — Provola, ham & corn</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Provola rolls — Provola with mushrooms</div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Buffalo mozzarella bites — Grilled with speck</div><div class="item-desc">Grilled; salmon version available</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Buffalo mozzarella bites — With salmon</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Grilled spicy Diavoletti</div></div><div class="price">8,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Spicy scamorza with porcini</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Eggplant parmigiana — Red</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Eggplant parmigiana — White</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Eggplant parmigiana — Basil pesto</div></div><div class="price">7,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Gratin bread cannellone with ham mousse</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Rustic pie with sausage, friarielli & provola</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Scarole pizza</div></div><div class="price">7,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="name-row"><div class="item-name">Caprese (buffalo mozzarella, tomato, basil, EVO oil)</div><div class="gf-badge">GF</div></div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Sicilian provola (eggplant, provola, grana)</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Beer Garden provola (provola, green peppers, grana)</div></div><div class="price">10,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Mexican-style beans</div><div class="item-desc">Gluten-free preparation available</div></div><div class="price">7,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Chef’s focaccia</div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Fried gnocchi — Garlic & parsley</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fried gnocchi — Cacio e pepe</div></div><div class="price">9,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Stuffed potato boat (ricotta & citrus pesto – 3 pcs)</div><div class="gf-badge">GF</div></div><div class="price">7,00</div></div>
-          </div>
-        </section>
-
-        <!-- FIRST COURSES -->
-        <section id="en-first" class="category-panel" aria-labelledby="title-en-first">
-          <div class="category-header">
-            <h2 id="title-en-first" class="category-title">🍝 First courses</h2>
-            <div class="category-note">Pasta & house first courses — GF pasta available on request</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Maccheroncini alla genovese</div></div><div class="price">14,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fusilli with Neapolitan ragù</div></div><div class="price">14,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ravioloni lemon, buffalo & pistachio</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pasta and potatoes with mussels</div><div class="item-desc">GF pasta available on request</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lumache rigate “Mancini” with peas, crispy guanciale, pecorino</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Gnocchi with swordfish, mussels, eggplant & mint</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ravioli cacio e pepe with butter, sage & licorice dust</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fusilli with porcini, walnuts & sausage</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fresh paccheri with potatoes, speck IGP, zucchini flowers & smoked provola</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Gnocchi with flours & potatoes, eggplant, spicy sausage & provola</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ravioli ricotta & mozzarella with three tomatoes</div></div><div class="price">10,00</div></div>
-          </div>
-        </section>
-
-        <!-- MAINS -->
-        <section id="en-mains" class="category-panel" aria-labelledby="title-en-mains">
-          <div class="category-header">
-            <h2 id="title-en-mains" class="category-title">🥩 Main courses</h2>
-            <div class="category-note">Grill & oven — many dishes adaptable GF</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Pan of meatballs in tomato sauce</div><div class="item-desc">GF version available on request</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Mixed pork grill with fries (sausage, tracchia, chop)</div><div class="item-desc">GF preparation on request</div></div><div class="price">15,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Meatballs with walnuts on the grill with fries</div><div class="item-desc">GF option possible</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grilled steak with fries</div><div class="item-desc">Selected cut, served to requested doneness.</div></div><div class="price">22,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pork shank with roasted potatoes</div></div><div class="price">15,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grilled swordfish with salad & walnuts</div><div class="item-desc">Gluten-free preparation</div></div><div class="price">18,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pork Ribs homemade</div><div class="item-desc">House preparation, served with BBQ sauce.</div></div><div class="price">18,00</div></div>
-          </div>
-        </section>
-
-        <!-- BRUSCHETTA -->
-        <section id="en-bruschetta" class="category-panel" aria-labelledby="title-en-bruschetta">
-          <div class="category-header">
-            <h2 id="title-en-bruschetta" class="category-title">🍞 Bruschetta</h2>
-            <div class="category-note">(2 slices per portion)</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Truffle</div><div class="item-desc">Pecorino truffle cream, Parma ham, truffle honey</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Classic</div><div class="item-desc">Tomato, garlic, EVO oil</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tricolore</div><div class="item-desc">Tomato, mozzarella, basil, EVO oil</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Corn</div><div class="item-desc">Corn, tuna sauce, mayonnaise</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Gypsy</div><div class="item-desc">Speck, Philadelphia</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tasty</div><div class="item-desc">Tomato, speck, mozzarella, EVO oil</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Norwegian</div><div class="item-desc">Butter, salmon</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Killer</div><div class="item-desc">Broccoli, sausage</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Delightful</div><div class="item-desc">Speck, provola</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Rustic</div><div class="item-desc">Philadelphia, grilled zucchini, caramelized onions</div></div><div class="price">4,00</div></div>
-          </div>
-        </section>
-
-        <!-- BURGERS -->
-        <section id="en-burgers" class="category-panel" aria-labelledby="title-en-burgers">
-          <div class="category-header">
-            <h2 id="title-en-burgers" class="category-title">🥪 Burgers</h2>
-            <div class="category-note">Beer Garden burgers</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Beer Garden</div><div class="item-desc">Scottona burger 200g, speck, tomato, Philadelphia, onion, lettuce, slice, mayo</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">A’ Scarol</div><div class="item-desc">Burger, buffalo mozzarella, scarola cream, parmesan, roasted potatoes</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pull</div><div class="item-desc">Pulled pork, guacamole, provola, iceberg, caramelized onion</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grandma’s sandwich</div><div class="item-desc">Meatballs in ragù, buffalo, parmesan cream, roasted potatoes</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sorry I’m Late</div><div class="item-desc">Scottona burger, breaded provola, Parma ham, tomato, onion, iceberg, BBQ</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Braveheart</div><div class="item-desc">Double sausage burger, provola, cheddar, onion, BBQ</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Campagnolo</div><div class="item-desc">Eggplant, mushrooms, rustic potatoes, double buffalo</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Porchino</div><div class="item-desc">Angus burger 200g, porcini, scamorza, parmesan cream, tomato, rocket</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Trinity</div><div class="item-desc">Porchetta, provola, eggplant</div></div><div class="price">8,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Corsaro</div><div class="item-desc">Sausage, broccoli, provola, fries</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Our Vegetarian</div><div class="item-desc">Red parmigiana, basil, roasted potatoes, parmesan cream</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">The Boss</div><div class="item-desc">Roast pork loin, provola, roasted potatoes, grana, iceberg</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Vegan</div><div class="item-desc">Vegan burger, red onion chutney, iceberg, battered vegetables, rustic fries</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Real Italian</div><div class="item-desc">Meatballs with walnuts, pesto, provola, semi-dried tomatoes</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Friendly</div><div class="item-desc">Smoked salmon, iceberg, crab meat, pink sauce, lemon</div></div><div class="price">10,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Azz</div><div class="item-desc">Sausage, spicy scamorza, roasted potatoes, parmesan cream</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Classic Scottona burger</div><div class="item-desc">Scottona 200g, fondue, tomato with basil, 30 months parmesan, pear jam, rocket</div></div><div class="price">13,00</div></div>
-          </div>
-        </section>
-
-        <!-- OUR MEATS (with subcategories) -->
-        <section id="en-meats" class="category-panel" aria-labelledby="title-en-meats">
-          <div class="category-header">
-            <h2 id="title-en-meats" class="category-title">🥩 Our meats</h2>
-            <div class="category-note">Subcategories: Burgers, Steaks €/100g, Entrecote €/100g, Sliced cuts, Specialties</div>
-          </div>
-
-          <div class="subcat-bar" role="tablist" aria-label="Meat subcategories">
-            <button class="subcat-btn active" data-sub="en-sub-burgers">🍔 Burgers</button>
-            <button class="subcat-btn" data-sub="en-sub-steaks">🥩 Steaks</button>
-            <button class="subcat-btn" data-sub="en-sub-entrecote">🥩 Entrecote</button>
-            <button class="subcat-btn" data-sub="en-sub-sliced">🔪 Sliced cuts</button>
-            <button class="subcat-btn" data-sub="en-sub-specialties">🍗 Specialties</button>
-          </div>
-
-          <div id="en-sub-burgers" class="subcat-panel active">
-            <div class="subsection-title">🍔 Burgers (served with rustic fries)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Angus Irish burger 280g</div></div><div class="price">13,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Scottona burger 280g</div></div><div class="price">13,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Chianina burger 300g</div></div><div class="price">16,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Rubia Gallega burger 300g</div></div><div class="price">16,00</div></div>
-            </div>
-          </div>
-
-          <div id="en-sub-steaks" class="subcat-panel">
-            <div class="subsection-title">🥩 Steaks — price per 100g (€/100g)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Prussian premium ribeye</div></div><div class="price">6,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Scottona ribeye</div></div><div class="price">6,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Prussian premium Fiorentina</div></div><div class="price">6,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Bavarian ribeye</div></div><div class="price">6,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Fat cow ribeye</div></div><div class="price">6,50 €/100g</div></div>
-            </div>
-          </div>
-
-          <div id="en-sub-entrecote" class="subcat-panel">
-            <div class="subsection-title">🥩 Entrecote — price per 100g (€/100g)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Black Angus US</div></div><div class="price">8,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Argentinian Angus</div></div><div class="price">7,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Irish Angus</div></div><div class="price">6,50 €/100g</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Prussian premium</div></div><div class="price">6,50 €/100g</div></div>
-            </div>
-          </div>
-
-          <div id="en-sub-sliced" class="subcat-panel">
-            <div class="subsection-title">🔪 Sliced cuts</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Sliced entrecote with rocket & parmesan flakes</div></div><div class="price">18,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Sliced entrecote with porcini & fossa cheese</div></div><div class="price">20,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Sliced chicken with seasonal vegetables</div></div><div class="price">15,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Sliced black pork with cherry tomatoes & fossa cheese</div></div><div class="price">15,00</div></div>
-            </div>
-          </div>
-
-          <div id="en-sub-specialties" class="subcat-panel">
-            <div class="subsection-title">🍗 Meat specialties (grill / oven)</div>
-            <div class="items">
-              <div class="item"><div class="item-left"><div class="item-name">Mixed pork grill</div></div><div class="price">15,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Meatballs with walnuts on the grill</div></div><div class="price">10,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Grilled steak</div></div><div class="price">22,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Pork shank</div></div><div class="price">15,00</div></div>
-              <div class="item"><div class="item-left"><div class="item-name">Pork Ribs homemade</div></div><div class="price">18,00</div></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- SIDES -->
-        <section id="en-sides" class="category-panel" aria-labelledby="title-en-sides">
-          <div class="category-header">
-            <h2 id="title-en-sides" class="category-title">🥗 Sides</h2>
-            <div class="category-note">Vegetables & sides</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Eggplant in tomato sauce</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Roasted potatoes</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grilled vegetables</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Broccoli</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Scarole</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Green salad</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sautéed mushrooms</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Green peppers</div></div><div class="price">5,00</div></div>
-          </div>
-        </section>
-
-        <!-- DESSERTS -->
-        <section id="en-desserts" class="category-panel" aria-labelledby="title-en-desserts">
-          <div class="category-header">
-            <h2 id="title-en-desserts" class="category-title">🍰 Desserts</h2>
-            <div class="category-note">Sweets & desserts</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Cheesecake (various flavors)</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sour cherry semifreddo</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Oreo semifreddo</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Almond semifreddo</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lotus semifreddo</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tiramisù</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Pistachio tiramisù</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lemon delight</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Crema catalana</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Profiteroles</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Deconstructed millefeuille</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Nutella babà</div></div><div class="price">4,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Panna cotta (various flavors)</div></div><div class="price">5,00</div></div>
-          </div>
-        </section>
-
-        <!-- DRINKS -->
-        <section id="en-drinks" class="category-panel" aria-labelledby="title-en-drinks">
-          <div class="category-header">
-            <h2 id="title-en-drinks" class="category-title">🥤 Drinks</h2>
-            <div class="category-note">Water & soft drinks</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Ferrarelle water 75cl</div></div><div class="price">2,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Electa water 75cl</div></div><div class="price">2,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Spezi</div></div><div class="price">3,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Spezi Zero</div></div><div class="price">3,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sangria Roqueta 1lt</div></div><div class="price">13,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Coca Cola</div></div><div class="price">2,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Coca Cola Zero</div></div><div class="price">2,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Fanta</div></div><div class="price">2,50</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Sprite</div></div><div class="price">2,50</div></div>
-          </div>
-        </section>
-
-        <!-- DRAUGHT -->
-        <section id="en-draught" class="category-panel" aria-labelledby="title-en-draught">
-          <div class="category-header">
-            <h2 id="title-en-draught" class="category-title">🍺 Draught</h2>
-            <div class="category-note">Draught selection — sizes indicated</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Tucher Hefe Weizen — 0.30</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Tucher Hefe Weizen — 0.50</div></div><div class="price">7,50</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Pilsner — 0.25</div></div><div class="price">3,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Pilsner — 0.40</div></div><div class="price">5,00</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Special Brew — 0.25</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Carlsberg Special Brew — 0.40</div></div><div class="price">7,50</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Double — 0.30</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Double — 0.50</div></div><div class="price">7,50</div></div>
-
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Triple — 0.30</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Grimbergen Triple — 0.50</div></div><div class="price">7,50</div></div>
-          </div>
-        </section>
-
-        <!-- BOTTLED -->
-        <section id="en-bottled" class="category-panel" aria-labelledby="title-en-bottled">
-          <div class="category-header">
-            <h2 id="title-en-bottled" class="category-title">🍺 Bottled</h2>
-            <div class="category-note">Bottled selection</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Bayreuther Hell</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">König Ludwig Weissebier</div></div><div class="price">7,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Riegele Augustus</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Riegele Privat</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Riegele non-alcoholic</div></div><div class="price">5,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Ambar Special (gluten free)</div></div><div class="price">6,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lupulus</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Lupulus Brune</div></div><div class="price">9,00</div></div>
-            <div class="item"><div class="item-left"><div class="item-name">Hobgoblin IPA</div></div><div class="price">7,00</div></div>
-          </div>
-        </section>
-
-        <!-- SERVICE -->
-        <section id="en-service" class="category-panel" aria-labelledby="title-en-service">
-          <div class="category-header">
-            <h2 id="title-en-service" class="category-title">💳 Service</h2>
-            <div class="category-note">Per person</div>
-          </div>
-          <div class="items">
-            <div class="item"><div class="item-left"><div class="item-name">Service charge per person</div></div><div class="price">2,00</div></div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- FOOTER EN -->
-      <footer class="footer" role="contentinfo">
-        <div class="footer-inner">
-          <div class="footer-row">
-            <div class="footer-pill">📶 Wi‑Fi available — ask staff</div>
-            <div class="footer-copy">© Beer Garden</div>
-          </div>
-          <div style="color:var(--muted);font-size:.92rem">For allergens ask staff.</div>
-        </div>
-      </footer>
-    </main>
-
+<!-- SCHERMATA DI BENVENUTO E SELEZIONE LINGUA -->
+<div id="language-screen">
+  <div class="lang-logo">Beer Garden</div>
+  <div class="lang-sub">Menu Digitale Ufficiale</div>
+  <div class="lang-box">
+    <button class="lang-btn" onclick="selectLanguage('it')">🇮🇹 Italiano</button>
+    <button class="lang-btn" onclick="selectLanguage('en')">🇬🇧 English</button>
+  </div>
+</div>
+
+<!-- CONTENUTO PRINCIPALE DEL MENU -->
+<div id="main-content" class="wrap">
+
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">Beer Garden – Menu Digitale Ufficiale</div>
+    <div class="hero-title">Beer Garden</div>
+    <div class="hero-sub">Trecase (NA)</div>
   </div>
 
-  <script>
-    // Elements
-    const overlay = document.getElementById('lang-overlay');
-    const langBtns = document.querySelectorAll('.lang-btn');
-    const viewIt = document.getElementById('view-it');
-    const viewEn = document.getElementById('view-en');
-    const switchToEn = document.getElementById('switch-to-en');
-    const switchToIt = document.getElementById('switch-to-it');
+  <!-- BARRA DI NAVIGAZIONE DINAMICA -->
+  <div class="nav-container">
+    <nav class="nav" id="main-nav"></nav>
+  </div>
 
-    // Show chosen view and persist
-    function showView(lang){
-      if(lang==='en'){
-        viewEn.style.display='block';
-        viewIt.style.display='none';
-      } else {
-        viewIt.style.display='block';
-        viewEn.style.display='none';
-      }
-      overlay.style.display='none';
-      try{ localStorage.setItem('bg_lang', lang); }catch(e){}
-      const firstCat = (lang==='en') ? viewEn.querySelector('.cat') : viewIt.querySelector('.cat');
-      if(firstCat) activateCategory(firstCat);
+  <!-- MINI-PAGINE GENERATE DA JAVASCRIPT -->
+  <div id="menu-pages"></div>
+
+  <!-- FOOTER CON CITAZIONE E INFORMAZIONI DI SERVIZIO -->
+  <div class="footer">
+    <div class="quote-box" id="footer-quote">“DA SEMPRE COME CASA”</div>
+    <p><span id="footer-welcome">Benvenuti da</span> <strong>Beer Garden</strong></p>
+    <p style="font-size:11px; opacity:0.6; margin-top:4px;" id="footer-nfc">Menu Digitale NFC al Tavolo</p>
+    
+    <div class="wifi-box">
+      <span>📶 Wi-Fi:</span>
+      <strong style="color: var(--accent);" id="wifi-pass">Chiedere al personale</strong>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const menuData = {
+  it: {
+    heroTag: "Beer Garden – Menu Digitale Ufficiale",
+    footerWelcome: "Benvenuti da",
+    footerNfc: "Menu Digitale NFC al Tavolo",
+    footerQuote: "“DA SEMPRE COME CASA”",
+    backText: "⬅ Torna alle Categorie",
+    categories: {
+      antipasti: "Antipasti",
+      primi: "Primi Piatti",
+      secondi: "Secondi Piatti",
+      bruschette: "Bruschette",
+      panini: "Panini",
+      carni: "Le Nostre Carni",
+      contorni: "Contorni",
+      dessert: "Dessert",
+      bibite: "Bibite",
+      birre_spina: "Birre alla Spina",
+      birre_bottiglia: "Birre in Bottiglia",
+      servizio: "Servizio"
+    },
+    items: {
+      antipasti: [
+        { name: "Tartare di manzo", price: "€16,00", desc: "Fettine sottili di manzo selezionato battute a coltello." },
+        { name: "Insalata di Cous Cous", price: "€10,00", desc: "Cous cous fresco con condimento della casa." },
+        { name: "Cous Cous di verdure", price: "€8,00", desc: "Cous cous saltato con verdure di stagione." },
+        { name: "Cous Cous di mare", price: "€10,00", desc: "Cous cous arricchito con frutti di mare freschi." },
+        { name: "Carpaccio di pecorino e noci", price: "€10,00", desc: "Pecorino stagionato in carpaccio con gherigli di noci." },
+        { name: "Grana alla brace al limone", price: "€10,00", desc: "Formaggio Grana grigliato sfumato al limone." },
+        { name: "Involtini di provola e prosciutto", price: "€9,00", desc: "Involtini filanti di provola con prosciutto cotto." },
+        { name: "Involtini di provola, prosciutto e mais", price: "€9,00", desc: "Involtini di provola, prosciutto e mais croccante." },
+        { name: "Involtini di provola ai funghi", price: "€9,00", desc: "Involtini di provola ripieni di funghi saporiti." },
+        { name: "Bocconcini di bufala alla brace con speck", price: "€7,00", desc: "Bocconcini di mozzarella di bufala scottati alla brace avvolti nello speck." },
+        { name: "Bocconcini di bufala con salmone", price: "€10,00", desc: "Bocconcini di bufala accompagnati da salmone." },
+        { name: "Diavoletti alla brace", price: "€8,00", desc: "Saporiti bocconcini piccanti cotti alla griglia." },
+        { name: "Scamorza piccante ai porcini", price: "€10,00", desc: "Scamorza piccante fusa con funghi porcini." },
+        { name: "Parmigiana di melanzane Rossa", price: "€7,00", desc: "Classica parmigiana di melanzane al pomodoro." },
+        { name: "Parmigiana di melanzane Bianca", price: "€7,00", desc: "Parmigiana di melanzane in versione bianca." },
+        { name: "Parmigiana di melanzane al pesto di basilico", price: "€7,00", desc: "Parmigiana di melanzane aromatizzata al pesto fresco." },
+        { name: "Cannellone di pane gratinato", price: "€7,00", desc: "Gratinato in forno con mousse al prosciutto cotto." },
+        { name: "Torta rustica salsiccia, friarielli e provola", price: "€7,00", desc: "Ricca torta rustica con salsiccia, friarielli campani e provola." },
+        { name: "Pizza di scarole", price: "€7,00", desc: "Tradizionale pizza di scarole ripiena." },
+        { name: "Caprese", price: "€9,00", desc: "Mozzarella di bufala campana, pomodoro fresco, basilico e olio EVO." },
+        { name: "Provola Siciliana", price: "€9,00", desc: "Con melanzane, provola filante e grana." },
+        { name: "Provola Beer Garden", price: "€10,00", desc: "Specialità della casa con provola, peperoni verdi e grana." },
+        { name: "Fagioli alla messicana", price: "€7,00", desc: "Fagioli caldi in stile messicano leggermente piccanti." },
+        { name: "Focaccia dello chef", price: "€9,00", desc: "Focaccia fragrante preparata secondo la ricetta dello chef." },
+        { name: "Gnocchi fritti Aglio e prezzemolo", price: "€7,00", desc: "Gnocchi fritti croccanti conditi con aglio e prezzemolo." },
+        { name: "Gnocchi fritti Cacio e pepe", price: "€9,00", desc: "Gnocchi fritti saltati con crema cacio e pepe." },
+        { name: "Barchetta di patate ripiena", price: "€7,00", desc: "3 pezzi ripieni di ricotta e pesto di agrumi." }
+      ],
+      primi: [
+        { name: "Maccheroncini alla genovese", price: "€14,00", desc: "Con tenero ragù di cipolle e carne stufata a lungo." },
+        { name: "Fusilli al ragù napoletano", price: "€14,00", desc: "Con il tradizionale ragù denso della domenica napoletana." },
+        { name: "Ravioloni limone, bufala e pistacchio", price: "€10,00", desc: "Ravioli ripieni di bufala con nota di limone e granella di pistacchio." },
+        { name: "Pasta e patate con cozze", price: "€13,00", desc: "Un grande classico di terra e mare cremoso e saporito." },
+        { name: "Lumache rigate “Mancini”", price: "€13,00", desc: "Con piselli, guanciale croccante e saporito pecorino bagnolese." },
+        { name: "Gnocchi pesce spada, cozze, melanzane, menta", price: "€13,00", desc: "Gnocchi freschi saltati con pesce spada, cozze, melanzane e menta." },
+        { name: "Ravioli cacio e pepe", price: "€13,00", desc: "Con burro, salvia e polvere di liquirizia." },
+        { name: "Fusilli porcini, noci e salsiccia", price: "€10,00", desc: "Fusilli con funghi porcini, noci tostate e salsiccia." },
+        { name: "Paccheri freschi patate, speck IGP, fiori di zucca, provola", price: "€9,00", desc: "Paccheri saltati con patate, speck IGP, fiori di zucca e provola affumicata." },
+        { name: "Gnocchi di farina e patate melanzane a funghetto, salsiccia, provola", price: "€9,00", desc: "Gnocchi con melanzane a funghetto, salsiccia piccante e provola." },
+        { name: "Ravioli ricotta e mozzarella ai tre pomodori", price: "€10,00", desc: "Ravioli ripieni con un tris di pomodori freschi." }
+      ],
+      secondi: [
+        { name: "Tegamino di polpette al sugo", price: "€10,00", desc: "Polpette di carne morbide cotte nel ricca passata di pomodoro." },
+        { name: "Grigliata mista di maiale con patate fritte", price: "€15,00", desc: "Comprende salsiccia, tracchia e costoletta di maiale con patatine." },
+        { name: "Polpette con noci alla brace con patatine fritte", price: "€10,00", desc: "Polpette arricchite con noci cotte alla brace e servite con patatine." },
+        { name: "Bistecca alla brace con patatine fritte", price: "€22,00", desc: "Bistecca succulenta cotta alla griglia con contorno di patatine." },
+        { name: "Stinco di maiale con patate al forno", price: "€15,00", desc: "Stinco di maiale tenerissimo cotto al forno con patate." },
+        { name: "Pesce spada alla brace con insalatina e noci", price: "€18,00", desc: "Trancio di pesce spada alla griglia con insalata fresca e noci." },
+        { name: "Pork Ribs (homemade)", price: "€18,00", desc: "Costine di maiale artigianali cotte a regola d'arte." }
+      ],
+      bruschette: [
+        { name: "Tartufo", price: "€7,00", desc: "Crema di pecorino al tartufo, prosciutto crudo di Parma e miele al tartufo (2 fette)." },
+        { name: "Solita", price: "€3,00", desc: "Pomodoro fresco, aglio e olio EVO (2 fette)." },
+        { name: "Tricolore", price: "€4,00", desc: "Pomodoro, mozzarella, basilico e olio EVO (2 fette)." },
+        { name: "Mais", price: "€3,00", desc: "Mais, salsa tonnata e maionese (2 fette)." },
+        { name: "Zingara", price: "€4,00", desc: "Speck e Philadelphia (2 fette)." },
+        { name: "Saporita", price: "€4,00", desc: "Pomodoro, speck, mozzarella e olio EVO (2 fette)." },
+        { name: "Norvegese", price: "€4,00", desc: "Burro e salmone (2 fette)." },
+        { name: "Killer", price: "€4,00", desc: "Broccoli e salsiccia (2 fette)." },
+        { name: "Sfiziosa", price: "€4,00", desc: "Speck e provola (2 fette)." },
+        { name: "Rustichella", price: "€4,00", desc: "Philadelphia, zucchine grigliate e cipolle caramellate (2 fette)." }
+      ],
+      panini: [
+        { name: "Beer Garden", price: "€10,00", desc: "Hamburger scottona 200g, speck, pomodoro, philadelphia, cipolla, insalata, sottiletta, maionese, patatine al piatto." },
+        { name: "A’ Scarol", price: "€10,00", desc: "Hamburger, bufala, crema di scarola, parmigiano, patate al forno." },
+        { name: "Pull", price: "€10,00", desc: "Pulled pork, guacamole, provola, iceberg, cipolla caramellata." },
+        { name: "Panino della Nonna", price: "€10,00", desc: "Polpette al ragù, bufala, crema al parmigiano, patate al forno." },
+        { name: "Scusate il Ritardo", price: "€10,00", desc: "Hamburger scottona, provola panata, crudo di Parma, pomodoro, cipolla, iceberg, BBQ." },
+        { name: "Braveheart", price: "€9,00", desc: "Doppio hamburger salsiccia, provola, cheddar, cipolla, BBQ." },
+        { name: "Campagnolo", price: "€10,00", desc: "Melanzane, funghetti, patate rustiche, doppia bufala." },
+        { name: "Porchino", price: "€10,00", desc: "Hamburger Angus 200g, porcini, scamorza, crema parmigiano, pomodoro, rucola." },
+        { name: "Trinità", price: "€8,00", desc: "Porchetta, provola, melanzane a funghetto." },
+        { name: "Corsaro", price: "€9,00", desc: "Salsiccia, broccoli, provola, patatine fritte." },
+        { name: "Il “Nostro” Vegetariano", price: "€9,00", desc: "Parmigiana rossa, basilico, patate al forno, crema al parmigiano." },
+        { name: "Il Padrone", price: "€9,00", desc: "Arista al forno, provola, patate al forno, grana, iceberg." },
+        { name: "Vegano", price: "€9,00", desc: "Hamburger vegano, chutney cipolla rossa, iceberg, verdure pastellate, patatine rustiche." },
+        { name: "Italiano Vero", price: "€10,00", desc: "Polpette con noci, pesto, provola, pomodorini semi-dry." },
+        { name: "Simpatico", price: "€10,00", desc: "Salmone affumicato, iceberg, polpa di granchio, salsa rosa, limone." },
+        { name: "Azz", price: "€13,00", desc: "Salsiccia, scamorza piccante, patate al forno, crema parmigiano arrost homemade." },
+        { name: "Il caro vecchio hamburger di scottona", price: "€13,00", desc: "Scottona 200g, fonduta, pomodoro al basilico, parmigiano 30 mesi, marmellata di pere, rucola." }
+      ],
+      carni: [
+        { name: "Hamburger Angus irlandese 280g", price: "€13,00", desc: "Hamburger (con patate rustiche)" },
+        { name: "Hamburger Scottona 280g", price: "€13,00", desc: "Hamburger (con patate rustiche)" },
+        { name: "Hamburger Chianina 300g", price: "€16,00", desc: "Hamburger (con patate rustiche)" },
+        { name: "Hamburger Rubia Gallega 300g", price: "€16,00", desc: "Hamburger (con patate rustiche)" },
+        { name: "Costata prussiana premium", price: "€6,50", desc: "Bistecca (prezzo all'etto)" },
+        { name: "Costata di scottona", price: "€6,50", desc: "Bistecca (prezzo all'etto)" },
+        { name: "Fiorentina prussiana premium", price: "€6,50", desc: "Bistecca (prezzo all'etto)" },
+        { name: "Costata bavarese", price: "€6,50", desc: "Bistecca (prezzo all'etto)" },
+        { name: "Costata vacca grassa", price: "€6,50", desc: "Bistecca (prezzo all'etto)" },
+        { name: "Black Angus americano", price: "€8,50", desc: "Entrecôte (prezzo all'etto)" },
+        { name: "Angus argentino", price: "€7,50", desc: "Entrecôte (prezzo all'etto)" },
+        { name: "Angus irlandese", price: "€6,50", desc: "Entrecôte (prezzo all'etto)" },
+        { name: "Prussiana premium", price: "€6,50", desc: "Entrecôte (prezzo all'etto)" },
+        { name: "Tagliata di entrecote con rucola e scaglie di grana", price: "€18,00", desc: "Tagliata" },
+        { name: "Tagliata di entrecote con porcini* e formaggio di fossa", price: "€20,00", desc: "Tagliata" },
+        { name: "Tagliata di pollo con verdure di stagione", price: "€15,00", desc: "Tagliata" },
+        { name: "Tagliata di maiale nero con pomodorini e formaggio di fossa", price: "€15,00", desc: "Tagliata" },
+        { name: "Grigliata mista di maiale", price: "€15,00", desc: "Specialità di carne (alla brace / al forno)" },
+        { name: "Polpette con noci alla brace", price: "€10,00", desc: "Specialità di carne (alla brace / al forno)" },
+        { name: "Bistecca alla brace", price: "€22,00", desc: "Specialità di carne (alla brace / al forno)" },
+        { name: "Stinco di maiale", price: "€15,00", desc: "Specialità di carne (alla brace / al forno)" },
+        { name: "Pork Ribs homemade", price: "€18,00", desc: "Specialità di carne (alla brace / al forno)" }
+      ],
+      contorni: [
+        { name: "Melanzane a funghetto", price: "€4,00", desc: "Classico contorno di melanzane fritte." },
+        { name: "Patate al forno", price: "€4,00", desc: "Patate dorate al forno con aromi." },
+        { name: "Verdure grigliate", price: "€5,00", desc: "Selezione di verdure fresche grigliate." },
+        { name: "Broccoli", price: "€4,00", desc: "Broccoli saltati in padella." },
+        { name: "Scarole", price: "€4,00", desc: "Scarole ripassate con aglio e olio." },
+        { name: "Insalata verde", price: "€3,00", desc: "Insalata verde fresca e croccante." },
+        { name: "Funghi trifolati", price: "€4,00", desc: "Funghi saltati con aglio e prezzemolo." },
+        { name: "Peperoncini verdi", price: "€5,00", desc: "Tipici peperoncini verdi di fiume fritti." }
+      ],
+      dessert: [
+        { name: "Cheesecake (vari gusti)", price: "€5,00", desc: "Torta al formaggio con guarnizione a scelta." },
+        { name: "Semifreddo all’amarena", price: "€5,00", desc: "Delizioso semifreddo con topping all'amarena." },
+        { name: "Semifreddo Oreo", price: "€5,00", desc: "Semifreddo goloso arricchito con biscotti Oreo." },
+        { name: "Semifreddo mandorlato", price: "€5,00", desc: "Semifreddo con croccante alle mandorle." },
+        { name: "Semifreddo Lotus", price: "€5,00", desc: "Semifreddo con crema e biscotti Lotus Biscoff." },
+        { name: "Tiramisù", price: "€5,00", desc: "Classico tiramisù artigianale al mascarpone e caffè." },
+        { name: "Tiramisù al pistacchio", price: "€5,00", desc: "Variante golosa con crema al pistacchio." },
+        { name: "Delizia al limone", price: "€5,00", desc: "Dolce tipico con crema al limone della costiera." },
+        { name: "Crema catalana", price: "€5,00", desc: "Crema al cucchiaio con crosticina di zucchero caramellato." },
+        { name: "Profiteroles", price: "€5,00", desc: "Bignè ripieni ricoperti di cioccolato." },
+        { name: "Millefoglie scomposta", price: "€4,00", desc: "Sfoglia croccante con crema chantilly." },
+        { name: "Babà alla nutella", price: "€4,00", desc: "Babà artigianale farcito con crema Nutella." },
+        { name: "Panna cotta (vari gusti)", price: "€5,00", desc: "Panna cotta fresca con salse assortite." }
+      ],
+      bibite: [
+        { name: "Acqua Ferrarelle 75cl", price: "€2,00", desc: "Acqua minerale frizzante." },
+        { name: "Acqua Electa 75cl", price: "€2,00", desc: "Acqua minerale naturale." },
+        { name: "Spezi", price: "€3,50", desc: "Bibita rinfrescante." },
+        { name: "Spezi Zero", price: "€3,50", desc: "Versione zero zuccheri." },
+        { name: "Sangria Roqueta 1lt", price: "€13,00", desc: "Sangria spagnola in formato caraffa." },
+        { name: "Coca Cola", price: "€2,50", desc: "Lattina o bottiglia 33cl." },
+        { name: "Coca Cola Zero", price: "€2,50", desc: "Senza zuccheri." },
+        { name: "Fanta", price: "€2,50", desc: "Bibita all'arancia 33cl." },
+        { name: "Sprite", price: "€2,50", desc: "Bibita al limone 33cl." }
+      ],
+      birre_spina: [
+        { name: "Tucher Hefe Weizen (0.30L)", price: "€5,00", desc: "Birra di frumento tedesca alla spina." },
+        { name: "Tucher Hefe Weizen (0.50L)", price: "€7,50", desc: "Birra di frumento tedesca alla spina formato grande." },
+        { name: "Carlsberg Pilsner (0.25L)", price: "€3,00", desc: "Birra bionda alla spina." },
+        { name: "Carlsberg Pilsner (0.40L)", price: "€5,00", desc: "Birra bionda alla spina formato grande." },
+        { name: "Carlsberg Special Brew (0.25L)", price: "€5,00", desc: "Birra speciale ad alta gradazione." },
+        { name: "Carlsberg Special Brew (0.40L)", price: "€7,50", desc: "Birra speciale ad alta gradazione formato grande." },
+        { name: "Grimbergen Double (0.30L)", price: "€5,00", desc: "Birra d'abbazia belga scura." },
+        { name: "Grimbergen Double (0.50L)", price: "€7,50", desc: "Birra d'abbazia belga scura formato grande." },
+        { name: "Grimbergen Triple (0.30L)", price: "€5,00", desc: "Birra d'abbazia belga dorata forte." },
+        { name: "Grimbergen Triple (0.50L)", price: "€7,50", desc: "Birra d'abbazia belga dorata forte formato grande." }
+      ],
+      birre_bottiglia: [
+        { name: "Bayreuther Hell", price: "€6,00", desc: "Birra bionda tedesca stile Helles." },
+        { name: "König Ludwig Weissebier", price: "€7,00", desc: "Weizen classica in bottiglia." },
+        { name: "Riegele Augustus", price: "€6,00", desc: "Birra artigianale bavarese." },
+        { name: "Riegele Privat", price: "€6,00", desc: "Pilsner bavarese di alta qualità." },
+        { name: "Riegele analcolica", price: "€5,00", desc: "Birra senza alcool." },
+        { name: "Ambar Special (gluten free)", price: "€6,00", desc: "Birra senza glutine." },
+        { name: "Lupulus", price: "€9,00", desc: "Famosa birra bionda belga forte." },
+        { name: "Lupulus Brune", price: "€9,00", desc: "Birra belga bruna strutturata." },
+        { name: "Hobgoblin IPA", price: "€7,50", desc: "India Pale Ale inglese ricca di luppolo." }
+      ],
+      servizio: [
+        { name: "Coperto (a persona)", price: "€2,00", desc: "Servizio e coperto." }
+      ]
     }
-
-    // Overlay buttons
-    langBtns.forEach(b=>{
-      b.addEventListener('click', ()=> {
-        const lang = b.getAttribute('data-lang');
-        showView(lang);
-      });
-    });
-
-    // Header language toggles
-    if(switchToEn) switchToEn.addEventListener('click', ()=> showView('en'));
-    if(switchToIt) switchToIt.addEventListener('click', ()=> showView('it'));
-
-    // Auto-open if preference exists
-    try{
-      const pref = localStorage.getItem('bg_lang');
-      if(pref==='it' || pref==='en'){ setTimeout(()=>showView(pref),200); }
-    }catch(e){}
-
-    // Category navigation (per view)
-    function activateCategory(catEl){
-      if(!catEl) return;
-      const viewRoot = catEl.closest('main');
-      if(!viewRoot) return;
-      viewRoot.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
-      catEl.classList.add('active');
-
-      const targetId = catEl.getAttribute('data-target');
-      if(!targetId) return;
-      viewRoot.querySelectorAll('.category-panel').forEach(p=>p.classList.remove('active'));
-      const panel = viewRoot.querySelector('#' + targetId);
-      if(panel) panel.classList.add('active');
-
-      // ensure the categories row keeps the active item visible
-      const catRow = catEl.closest('.categories');
-      if(catRow){
-        const rect = catEl.getBoundingClientRect();
-        const rowRect = catRow.getBoundingClientRect();
-        if(rect.left < rowRect.left || rect.right > rowRect.right){
-          catRow.scrollBy({left: rect.left - rowRect.left - 12, behavior:'smooth'});
-        }
-      }
-
-      // scroll to top of view for clarity
-      viewRoot.scrollTo({top:0,behavior:'smooth'});
+  },
+  en: {
+    heroTag: "Beer Garden – Official Digital Menu",
+    footerWelcome: "Welcome to",
+    footerNfc: "Digital NFC Menu at the Table",
+    footerQuote: "“ALWAYS LIKE HOME”",
+    backText: "⬅ Back to Categories",
+    categories: {
+      antipasti: "Starters",
+      primi: "First Courses",
+      secondi: "Main Courses",
+      bruschette: "Bruschetta",
+      panini: "Sandwiches & Burgers",
+      carni: "Our Meats",
+      contorni: "Side Dishes",
+      dessert: "Desserts",
+      bibite: "Soft Drinks",
+      birre_spina: "Draft Beers",
+      birre_bottiglia: "Bottled Beers",
+      servizio: "Service"
+    },
+    items: {
+      antipasti: [
+        { name: "Beef Tartare", price: "€16,00", desc: "Finely hand-cut selected raw beef." },
+        { name: "Cous Cous Salad", price: "€10,00", desc: "Fresh couscous with house dressing." },
+        { name: "Vegetable Cous Cous", price: "€8,00", desc: "Couscous tossed with seasonal vegetables." },
+        { name: "Seafood Cous Cous", price: "€10,00", desc: "Couscous enriched with fresh seafood." },
+        { name: "Pecorino & Walnut Carpaccio", price: "€10,00", desc: "Aged pecorino carpaccio with walnuts." },
+        { name: "Grilled Grana with Lemon", price: "€10,00", desc: "Grilled Grana cheese finished with a touch of lemon." },
+        { name: "Provola & Ham Rolls", price: "€9,00", desc: "Melt-in-your-mouth provola and cooked ham rolls." },
+        { name: "Provola, Ham & Corn Rolls", price: "€9,00", desc: "Provola, ham, and crispy corn rolls." },
+        { name: "Provola & Mushroom Rolls", price: "€9,00", desc: "Provola rolls filled with savory mushrooms." },
+        { name: "Grilled Buffalo Bocconcini with Speck", price: "€7,00", desc: "Sear-grilled buffalo mozzarella bites wrapped in speck." },
+        { name: "Buffalo Bocconcini with Salmon", price: "€10,00", desc: "Buffalo mozzarella bites served with salmon." },
+        { name: "Grilled Spicy Bites ('Diavoletti')", price: "€8,00", desc: "Flavorful grilled spicy meat bites." },
+        { name: "Spicy Scamorza with Porcini", price: "€10,00", desc: "Melted spicy scamorza cheese with porcini mushrooms." },
+        { name: "Red Eggplant Parmigiana", price: "€7,00", desc: "Classic red tomato eggplant parmigiana." },
+        { name: "White Eggplant Parmigiana", file: "€7,00", price: "€7,00", desc: "White version eggplant parmigiana." },
+        { name: "Basil Pesto Eggplant Parmigiana", price: "€7,00", desc: "Eggplant parmigiana flavored with fresh basil pesto." },
+        { name: "Gratinated Bread Cannellone", price: "€7,00", desc: "Oven-baked with cooked ham mousse." },
+        { name: "Sausage, Friarielli & Provola Pie", price: "€7,00", desc: "Rich savory pie with sausage, broccoli rabe, and provola." },
+        { name: "Escarole Pizza", price: "€7,00", desc: "Traditional stuffed escarole pie." },
+        { name: "Caprese Salad", price: "€9,00", desc: "Campania buffalo mozzarella, fresh tomato, basil, and EVO oil." },
+        { name: "Sicilian Provola", price: "€9,00", desc: "With eggplant, melted provola, and grana." },
+        { name: "Beer Garden Provola", price: "€10,00", desc: "House specialty with provola, green peppers, and grana." },
+        { name: "Mexican-style Beans", price: "€7,00", desc: "Warm slightly spicy Mexican-style beans." },
+        { name: "Chef's Focaccia", price: "€9,00", desc: "Fragrant focaccia prepared to the chef's recipe." },
+        { name: "Fried Gnocchi with Garlic & Parsley", price: "€7,00", desc: "Crispy fried gnocchi tossed with garlic and parsley." },
+        { name: "Fried Gnocchi Cacio e Pepe", price: "€9,00", desc: "Fried gnocchi tossed in cacio e pepe cream." },
+        { name: "Stuffed Potato Boat", price: "€7,00", desc: "3 pieces stuffed with ricotta and citrus pesto." }
+      ],
+      primi: [
+        { name: "Maccheroncini alla Genovese", price: "€14,00", desc: "With slow-cooked tender onion and beef ragù." },
+        { name: "Fusilli with Neapolitan Ragù", price: "€14,00", desc: "With the traditional rich Sunday Neapolitan meat sauce." },
+        { name: "Lemon, Buffalo & Pistachio Ravioloni", price: "€10,00", desc: "Buffalo cheese-filled ravioli with a touch of lemon and pistachio dust." },
+        { name: "Pasta & Potatoes with Mussels", price: "€13,00", desc: "A creamy and flavorful land-and-sea classic." },
+        { name: "“Mancini” Lumache Rigate", price: "€13,00", desc: "With peas, crispy cured guanciale, and bagnolese pecorino." },
+        { name: "Swordfish, Mussels, Eggplant & Mint Gnocchi", price: "€13,00", desc: "Fresh gnocchi tossed with swordfish, mussels, eggplant, and mint." },
+        { name: "Cacio e Pepe Ravioli", price: "€13,00", desc: "With butter, sage, and licorice powder." },
+        { name: "Porcini, Walnut & Sausage Fusilli", price: "€10,00", desc: "Fusilli with porcini mushrooms, toasted walnuts, and sausage." },
+        { name: "Fresh Paccheri with Potatoes, IGP Speck, Zucchini Flowers & Provola", price: "€9,00", desc: "Paccheri tossed with potatoes, IGP speck, zucchini flowers, and smoked provola." },
+        { name: "Potato & Flour Gnocchi with Eggplant, Spicy Sausage & Provola", price: "€9,00", desc: "Gnocchi with small fried eggplants, spicy sausage, and provola." },
+        { name: "Ricotta & Mozzarella Ravioli with Three Tomatoes", price: "€10,00", desc: "Stuffed ravioli with a trio of fresh tomatoes." }
+      ],
+      secondi: [
+        { name: "Skillet Meatballs in Tomato Sauce", price: "€10,00", desc: "Soft beef meatballs cooked in rich tomato purée." },
+        { name: "Mixed Pork Grill with French Fries", price: "€15,00", desc: "Includes pork sausage, rib, and chop with french fries." },
+        { name: "Grilled Meatballs with Walnuts & French Fries", price: "€10,00", desc: "Meatballs enhanced with walnuts, grilled and served with fries." },
+        { name: "Grilled Steak with French Fries", price: "€22,00", desc: "Succulent grilled steak served with french fries." },
+        { name: "Pork Shank with Oven Potatoes", price: "€15,00", desc: "Tender oven-roasted pork shank with potatoes." },
+        { name: "Grilled Swordfish with Salad & Walnuts", price: "€18,00", desc: "Grilled swordfish steak with fresh salad and walnuts." },
+        { name: "Homemade Pork Ribs", price: "€18,00", desc: "Expertly cooked homemade BBQ pork ribs." }
+      ],
+      bruschette: [
+        { name: "Truffle", price: "€7,00", desc: "Truffle pecorino cream, Parma ham, truffle honey (2 slices)." },
+        { name: "Classic ('Solita')", price: "€3,00", desc: "Fresh tomato, garlic, and EVO oil (2 slices)." },
+        { name: "Tricolore", price: "€4,00", desc: "Tomato, mozzarella, basil, and EVO oil (2 slices)." },
+        { name: "Corn", price: "€3,00", desc: "Corn, tuna sauce, and mayonnaise (2 slices)." },
+        { name: "Zingara", price: "€4,00", desc: "Speck and Philadelphia cheese (2 slices)." },
+        { name: "Saporita", price: "€4,00", desc: "Tomato, speck, mozzarella, and EVO oil (2 slices)." },
+        { name: "Norwegian", price: "€4,00", desc: "Butter and salmon (2 slices)." },
+        { name: "Killer", price: "€4,00", desc: "Broccoli rabe and sausage (2 slices)." },
+        { name: "Sfiziosa", price: "€4,00", desc: "Speck and provola cheese (2 slices)." },
+        { name: "Rustichella", price: "€4,00", desc: "Philadelphia, grilled zucchini, and caramelized onions (2 slices)." }
+      ],
+      panini: [
+        { name: "Beer Garden", price: "€10,00", desc: "200g Scottona burger, speck, tomato, philadelphia, onion, lettuce, American cheese, mayonnaise, plate of fries." },
+        { name: "A’ Scarol", price: "€10,00", desc: "Burger, buffalo mozzarella, escarole cream, parmesan, oven potatoes." },
+        { name: "Pull", price: "€10,00", desc: "Pulled pork, guacamole, provola, iceberg, caramelized onion." },
+        { name: "Panino della Nonna", price: "€10,00", desc: "Ragù meatballs, buffalo mozzarella, parmesan cream, oven potatoes." },
+        { name: "Scusate il Ritardo", price: "€10,00", desc: "Scottona burger, breaded provola, Parma ham, tomato, onion, iceberg, BBQ." },
+        { name: "Braveheart", price: "€9,00", desc: "Double sausage burger, provola, cheddar, onion, BBQ." },
+        { name: "Campagnolo", price: "€10,00", desc: "Eggplant, mushrooms, rustic potatoes, double buffalo mozzarella." },
+        { name: "Porchino", price: "€10,00", desc: "200g Angus burger, porcini mushrooms, scamorza, parmesan cream, tomato, arugula." },
+        { name: "Trinità", price: "€8,00", desc: "Roast pork ('porchetta'), provola, small fried eggplants." },
+        { name: "Corsaro", price: "€9,00", desc: "Sausage, broccoli rabe, provola, french fries." },
+        { name: "The Vegetarian ('Il Nostro Vegetariano')", price: "€9,00", desc: "Red parmigiana, basil, oven potatoes, parmesan cream." },
+        { name: "The Boss ('Il Padrone')", price: "€9,00", desc: "Oven-baked pork loin, provola, oven potatoes, grana, iceberg." },
+        { name: "Vegan", price: "€9,00", desc: "Vegan burger, red onion chutney, iceberg, battered vegetables, rustic fries." },
+        { name: "Italiano Vero", price: "€10,00", desc: "Walnut meatballs, pesto, provola, semi-dry cherry tomatoes." },
+        { name: "Simpatico", price: "€10,00", desc: "Smoked salmon, iceberg, crab meat, pink sauce, lemon." },
+        { name: "Azz", price: "€13,00", desc: "Sausage, spicy scamorza, oven potatoes, homemade roast parmesan cream." },
+        { name: "The Classic Scottona Burger", price: "€13,00", desc: "200g Scottona, cheese fondue, basil tomato, 30-month parmesan, pear jam, arugula." }
+      ],
+      carni: [
+        { name: "Irish Angus Burger 280g", price: "€13,00", desc: "Burger (with rustic potatoes)" },
+        { name: "Scottona Burger 280g", price: "€13,00", desc: "Burger (with rustic potatoes)" },
+        { name: "Chianina Burger 300g", price: "€16,00", desc: "Burger (with rustic potatoes)" },
+        { name: "Rubia Gallega Burger 300g", price: "€16,00", desc: "Burger (with rustic potatoes)" },
+        { name: "Premium Prussian Ribeye", price: "€6,50", desc: "Steak (price per 100g / 3.5 oz)" },
+        { name: "Scottona Ribeye", price: "€6,50", desc: "Steak (price per 100g / 3.5 oz)" },
+        { name: "Premium Prussian Fiorentina", price: "€6,50", desc: "Steak (price per 100g / 3.5 oz)" },
+        { name: "Bavarian Ribeye", price: "€6,50", desc: "Steak (price per 100g / 3.5 oz)" },
+        { name: "Fat Cow Ribeye", price: "€6,50", desc: "Steak (price per 100g / 3.5 oz)" },
+        { name: "American Black Angus", price: "€8,50", desc: "Entrecôte (price per 100g / 3.5 oz)" },
+        { name: "Argentine Angus", price: "€7,50", desc: "Entrecôte (price per 100g / 3.5 oz)" },
+        { name: "Irish Angus", price: "€6,50", desc: "Entrecôte (price per 100g / 3.5 oz)" },
+        { name: "Premium Prussian Entrecôte", price: "€6,50", desc: "Entrecôte (price per 100g / 3.5 oz)" },
+        { name: "Entrecôte Tagliata with Arugula & Grana Shavings", price: "€18,00", desc: "Sliced steak" },
+        { name: "Entrecôte Tagliata with Porcini* & Fossa Cheese", price: "€20,00", desc: "Sliced steak" },
+        { name: "Chicken Tagliata with Seasonal Vegetables", price: "€15,00", desc: "Sliced steak" },
+        { name: "Black Pork Tagliata with Cherry Tomatoes & Fossa Cheese", price: "€15,00", desc: "Sliced steak" },
+        { name: "Mixed Pork Grill", price: "€15,00", desc: "Meat Specialty (grilled / oven-baked)" },
+        { name: "Grilled Walnut Meatballs", price: "€10,00", desc: "Meat Specialty (grilled / oven-baked)" },
+        { name: "Grilled Steak", price: "€22,00", desc: "Meat Specialty (grilled / oven-baked)" },
+        { name: "Pork Shank", price: "€15,00", desc: "Meat Specialty (grilled / oven-baked)" },
+        { name: "Homemade Pork Ribs", price: "€18,00", desc: "Meat Specialty (grilled / oven-baked)" }
+      ],
+      contorni: [
+        { name: "Fried Small Eggplants ('A funghetto')", price: "€4,00", desc: "Classic pan-fried diced eggplants." },
+        { name: "Oven-Baked Potatoes", price: "€4,00", desc: "Golden potatoes roasted with herbs." },
+        { name: "Grilled Vegetables", price: "€5,00", desc: "Selection of fresh grilled vegetables." },
+        { name: "Broccoli Rabe", price: "€4,00", desc: "Sautéed broccoli rabe greens." },
+        { name: "Escarole Greens", price: "€4,00", desc: "Sautéed escarole with garlic and oil." },
+        { name: "Green Salad", price: "€3,00", desc: "Fresh and crisp green salad." },
+        { name: "Sautéed Mushrooms", price: "€4,00", desc: "Mushrooms sautéed with garlic and parsley." },
+        { name: "Green River Peppers", price: "€5,00", desc: "Typical mild green peppers fried." }
+      ],
+      dessert: [
+        { name: "Cheesecake (various flavors)", price: "€5,00", desc: "Creamy cheesecake with choice of topping." },
+        { name: "Amarena Cherry Semifreddo", price: "€5,00", desc: "Delicious semi-frozen dessert with black cherry topping." },
+        { name: "Oreo Semifreddo", price: "€5,00", desc: "Semi-frozen dessert enriched with Oreo cookies." },
+        { name: "Almond Semifreddo", price: "€5,00", desc: "Semi-frozen dessert with crunchy almonds." },
+        { name: "Lotus Semifreddo", price: "€5,00", desc: "Semi-frozen dessert with Lotus Biscoff cream and cookies." },
+        { name: "Tiramisù", price: "€5,00", desc: "Classic artisanal mascarpone and espresso tiramisù." },
+        { name: "Pistachio Tiramisù", price: "€5,00", desc: "Delicious variant with rich pistachio cream." },
+        { name: "Lemon Delight", price: "€5,00", desc: "Typical coastal pastry with lemon cream." },
+        { name: "Catalan Cream", price: "€5,00", desc: "Custard dessert with a caramelized sugar crust." },
+        { name: "Profiteroles", price: "€5,00", desc: "Cream-filled choux pastries covered in chocolate." },
+        { name: "Deconstructed Millefeuille", price: "€4,00", desc: "Crispy puff pastry layers with chantilly cream." },
+        { name: "Nutella Babà", price: "€4,00", desc: "Artisanal rum sponge cake filled with Nutella cream." },
+        { name: "Panna Cotta (various flavors)", price: "€5,00", desc: "Fresh chilled cream pudding with assorted sauces." }
+      ],
+      bibite: [
+        { name: "Ferrarelle Sparkling Water 75cl", price: "€2,00", desc: "Sparkling mineral water." },
+        { name: "Electa Still Water 75cl", price: "€2,00", desc: "Still mineral water." },
+        { name: "Spezi", price: "€3,50", desc: "Refreshing cola-orange beverage." },
+        { name: "Spezi Zero", price: "€3,50", desc: "Zero sugar version." },
+        { name: "Roqueta Sangria 1lt", price: "€13,00", desc: "Spanish pitcher of sangria." },
+        { name: "Coca Cola", price: "€2,50", desc: "Can or 33cl bottle." },
+        { name: "Coca Cola Zero", price: "€2,50", desc: "Zero sugar cola." },
+        { name: "Fanta", price: "€2,50", desc: "Orange soda 33cl." },
+        { name: "Sprite", price: "€2,50", desc: "Lemon-lime soda 33cl." }
+      ],
+      birre_spina: [
+        { name: "Tucher Hefe Weizen (0.30L)", price: "€5,00", desc: "German wheat draft beer." },
+        { name: "Tucher Hefe Weizen (0.50L)", price: "€7,50", desc: "Large German wheat draft beer." },
+        { name: "Carlsberg Pilsner (0.25L)", price: "€3,00", desc: "Blonde draft beer." },
+        { name: "Carlsberg Pilsner (0.40L)", price: "€5,00", desc: "Large blonde draft beer." },
+        { name: "Carlsberg Special Brew (0.25L)", price: "€5,00", desc: "High-strength special brew draft beer." },
+        { name: "Carlsberg Special Brew (0.40L)", price: "€7,50", desc: "Large high-strength special brew draft beer." },
+        { name: "Grimbergen Double (0.30L)", price: "€5,00", desc: "Belgian dark abbey draft beer." },
+        { name: "Grimbergen Double (0.50L)", price: "€7,50", desc: "Large Belgian dark abbey draft beer." },
+        { name: "Grimbergen Triple (0.30L)", price: "€5,00", desc: "Belgian strong golden abbey draft beer." },
+        { name: "Grimbergen Triple (0.50L)", price: "€7,50", desc: "Large Belgian strong golden abbey draft beer." }
+      ],
+      birre_bottiglia: [
+        { name: "Bayreuther Hell", price: "€6,00", desc: "German Helles style blonde bottled beer." },
+        { name: "König Ludwig Weissebier", price: "€7,00", desc: "Classic bottled wheat beer." },
+        { name: "Riegele Augustus", price: "€6,00", desc: "Bavarian craft beer." },
+        { name: "Riegele Privat", price: "€6,00", desc: "High quality Bavarian Pilsner." },
+        { name: "Riegele Non-Alcoholic", price: "€5,00", desc: "Alcohol-free beer." },
+        { name: "Ambar Special (gluten free)", price: "€6,00", desc: "Gluten-free beer." },
+        { name: "Lupulus", price: "€9,00", desc: "Famous strong Belgian blonde beer." },
+        { name: "Lupulus Brune", price: "€9,00", desc: "Structured Belgian brown beer." },
+        { name: "Hobgoblin IPA", price: "€7,50", desc: "English hop-rich India Pale Ale." }
+      ],
+      servizio: [
+        { name: "Cover Charge (per person)", price: "€2,00", desc: "Service and cover charge." }
+      ]
     }
+  }
+};
 
-    document.querySelectorAll('.cat').forEach(cat=>{
-      cat.addEventListener('click', ()=> activateCategory(cat));
-    });
+let currentLang = 'it';
 
-    // Subcategory handling (works per view)
-    document.querySelectorAll('.subcat-bar').forEach(bar=>{
-      bar.querySelectorAll('.subcat-btn').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const parentBar = btn.closest('.subcat-bar');
-          parentBar.querySelectorAll('.subcat-btn').forEach(b=>b.classList.remove('active'));
-          btn.classList.add('active');
-          const target = btn.getAttribute('data-sub');
-          const container = btn.closest('.category-panel');
-          if(!container) return;
-          container.querySelectorAll('.subcat-panel').forEach(p=>p.classList.remove('active'));
-          const panel = container.querySelector('#' + target);
-          if(panel) panel.classList.add('active');
-          container.scrollIntoView({behavior:'smooth', block:'start'});
-        });
+function selectLanguage(lang) {
+  currentLang = lang;
+  
+  document.getElementById('language-screen').classList.add('hidden');
+  document.getElementById('main-content').style.display = 'block';
+  
+  document.getElementById('hero-tag').innerText = menuData[lang].heroTag;
+  document.getElementById('footer-welcome').innerText = menuData[lang].footerWelcome;
+  document.getElementById('footer-nfc').innerText = menuData[lang].footerNfc;
+  document.getElementById('footer-quote').innerText = menuData[lang].footerQuote;
+  
+  buildMenu();
+  
+  openPage('antipasti');
+}
+
+function buildMenu() {
+  const data = menuData[currentLang];
+  const nav = document.getElementById('main-nav');
+  const pagesContainer = document.getElementById('menu-pages');
+  
+  nav.innerHTML = '';
+  pagesContainer.innerHTML = '';
+  
+  Object.keys(data.categories).forEach(catKey => {
+    const button = document.createElement('button');
+    button.className = 'pill';
+    button.setAttribute('onclick', `openPage('${catKey}')`);
+    button.innerText = data.categories[catKey];
+    nav.appendChild(button);
+    
+    const pageDiv = document.createElement('div');
+    pageDiv.id = catKey;
+    pageDiv.className = 'page';
+    pageDiv.innerHTML = `<h2><span>//</span> ${data.categories[catKey]}</h2>`;
+    
+    if (data.items[catKey]) {
+      data.items[catKey].forEach(item => {
+        pageDiv.innerHTML += `
+          <div class="item">
+            <div class="row">
+              <div class="name">${item.name}</div>
+              <div class="price">${item.price}</div>
+            </div>
+            <p class="desc">${item.desc}</p>
+          </div>
+        `;
       });
-    });
+    }
+    
+    pageDiv.innerHTML += `<button class="back-btn" onclick="closePages()">${data.backText}</button>`;
+    pagesContainer.appendChild(pageDiv);
+  });
+}
 
-    // Accessibility: Escape closes overlay and defaults to Italian
-    document.addEventListener('keydown', (e)=>{
-      if(e.key==='Escape' && overlay.style.display!=='none'){
-        showView('it');
-      }
-    });
+function openPage(pageId) {
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(page => page.classList.remove('active'));
+  
+  const pills = document.querySelectorAll('.pill');
+  pills.forEach(pill => pill.classList.remove('active'));
+  
+  const selectedPage = document.getElementById(pageId);
+  if (selectedPage) {
+    selectedPage.classList.add('active');
+    
+    const targetPill = Array.from(document.querySelectorAll('.pill')).find(pill => 
+      pill.getAttribute('onclick').includes(`'${pageId}'`)
+    );
+    if(targetPill) targetPill.classList.add('active');
+    
+    setTimeout(() => {
+      selectedPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
+}
 
-    // Initialize: hide both views until language chosen (overlay visible)
-    viewIt.style.display='none';
-    viewEn.style.display='none';
-  </script>
-</body>
-</html>
+function closePages() {
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(page => page.classList.remove('active'));
+  
+  const pills = document.querySelectorAll('.pill');
+  pills.forEach(pill => pill.classList.remove('active'));
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body></html>
